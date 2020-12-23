@@ -2,7 +2,9 @@ package me.zachary.sellwand.listeners;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
+import me.zachary.zachcore.utils.CooldownBuilder;
 import me.zachary.zachcore.utils.MessageUtils;
+import me.zachary.zachcore.utils.PermissionUtils;
 import me.zachary.zachcore.utils.PlayerInventoryUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.items.ItemBuilder;
@@ -38,6 +40,7 @@ public class RightClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
+            CooldownBuilder.createCooldown("Use cooldown");
             if(!player.hasPermission("sellwand.use")){
                 MessageUtils.sendMessage(player, plugin.getMessage().getString("No permission"));
                 return;
@@ -46,6 +49,10 @@ public class RightClickListener implements Listener {
             if(uses == 0)
                 return;
             event.setCancelled(true);
+            if(CooldownBuilder.isCooldown("Use cooldown", player.getUniqueId())){
+                MessageUtils.sendMessage(player, plugin.getMessage().getString("Player cooldown").replace("%seconds%", String.valueOf(CooldownBuilder.getCooldown("Use cooldown", player.getUniqueId()) / 1000)));
+                return;
+            }
             double multiplier = item.getDouble("Multiplier");
             for (int i = 0; i < chestClicked.getInventory().getContents().length; i++){
                 ItemStack chestItem = chestClicked.getInventory().getItem(i);
@@ -67,6 +74,8 @@ public class RightClickListener implements Listener {
                 MessageUtils.sendMessage(player, plugin.getMessage().getString("Amount give")
                         .replace("%price%", EconomyManager.formatEconomy(amount))
                         .replace("%item_amount%", String.valueOf(itemAmount)));
+                int cooldown = PermissionUtils.getNumberFromPermission(player, "sellwand.cooldown", false, 0);
+                CooldownBuilder.addCooldown("Use cooldown", player.getUniqueId(), cooldown);
             }
             else
                 MessageUtils.sendMessage(player, plugin.getMessage().getString("No item to sell in chest"));

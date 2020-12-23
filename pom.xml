@@ -120,8 +120,8 @@
         </repository>
         <!-- ZachCore -->
         <repository>
-            <id>space-zachcore</id>
-            <url>https://maven.pkg.jetbrains.space/zach/p/zachcore/zachcore</url>
+            <id>private</id>
+            <url>http://51.254.247.74:8081/repository/private/</url>
         </repository>
         <repository>
             <id>codemc-repo</id>
@@ -145,7 +145,7 @@
         <dependency>
             <groupId>me.zachary</groupId>
             <artifactId>ZachCore</artifactId>
-            <version>0.7.12</version>
+            <version>0.7.14</version>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>
@@ -156,8 +156,7 @@
             <groupId>fr.maxlego08</groupId>
             <artifactId>zshop</artifactId>
             <version>2.0.1.9</version>
-            <scope>system</scope>
-            <systemPath>C:/lib/zShop.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.brcdev-minecraft</groupId>

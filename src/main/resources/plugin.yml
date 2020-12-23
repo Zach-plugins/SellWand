@@ -1,7 +1,7 @@
 name: Sellwand
 version: ${project.version}
 main: me.zachary.sellwand.Sellwand
-api-version: 1.16
+api-version: 1.13
 authors: [ Zach_FR ]
 softdepend: [ ShopGUIPlus, HolographicDisplays, zShop, Vault ]
 description: Sell wand plugin

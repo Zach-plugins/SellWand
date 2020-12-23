@@ -22,6 +22,7 @@ public class MessageFile {
         this.cfg.add("Successful reload", "&cYou have successful reload the config.");
         this.cfg.add("No item to sell in chest", "&6No item to sell in this chest.");
         this.cfg.add("Amount give", "&6You have been sell %item_amount% items of chest content for a total of &e%price%&6.");
+        this.cfg.add("Player cooldown", "&cYou are in cooldown. &6Please try again in &e%seconds% &6seconds.");
     }
 
     public String getString(String path){
