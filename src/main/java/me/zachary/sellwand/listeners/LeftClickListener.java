@@ -52,7 +52,8 @@ public class LeftClickListener implements Listener {
                 }
             }
             amount = amount * multiplier;
-            Location hologramLoc = event.getClickedBlock().getLocation().add(0 , -0.80, 1);
+            Location hologramLoc = event.getClickedBlock().getLocation().add(getDifferenceX(player), -0.80, getDifferenceZ(player));
+            hologramLoc.setDirection(player.getLocation().getDirection());
             HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount));
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
                 @Override
@@ -70,5 +71,43 @@ public class LeftClickListener implements Listener {
                     .replace("%price%", EconomyManager.formatEconomy(price)));
         }
         return line;
+    }
+
+    private double getDifferenceX(Player player){
+        double direction = 0;
+        switch (player.getFacing().toString()){
+            case "WEST":
+                direction = 1;
+                break;
+            case "EAST":
+                direction = -1;
+                break;
+            case "SOUTH":
+            case "NORTH":
+                direction = 0;
+                break;
+            default:
+                break;
+        }
+        return direction;
+    }
+
+    private double getDifferenceZ(Player player){
+        double direction = 0;
+        switch (player.getFacing().toString()){
+            case "WEST":
+            case "EAST":
+                direction = 0;
+                break;
+            case "SOUTH":
+                direction = -1;
+                break;
+            case "NORTH":
+                direction = 1;
+                break;
+            default:
+                break;
+        }
+        return direction;
     }
 }
