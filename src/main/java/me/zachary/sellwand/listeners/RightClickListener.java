@@ -38,6 +38,10 @@ public class RightClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
+            if(!player.hasPermission("sellwand.use")){
+                MessageUtils.sendMessage(player, plugin.getMessage().getString("No permission"));
+                return;
+            }
             int uses = item.getInteger("Uses");
             if(uses == 0)
                 return;

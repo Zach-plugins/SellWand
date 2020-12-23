@@ -2,6 +2,7 @@ package me.zachary.sellwand.listeners;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
+import me.zachary.zachcore.utils.MessageUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import org.bukkit.Bukkit;
@@ -39,6 +40,10 @@ public class LeftClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
+            if(!player.hasPermission("sellwand.hologram")){
+                MessageUtils.sendMessage(player, plugin.getMessage().getString("No permission"));
+                return;
+            }
             event.setCancelled(true);
             double multiplier = item.getDouble("Multiplier");
             for (int i = 0; i < chestClicked.getInventory().getContents().length; i++) {
