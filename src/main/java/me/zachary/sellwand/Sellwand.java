@@ -1,5 +1,7 @@
 package me.zachary.sellwand;
 
+import com.Zrips.CMI.CMI;
+import com.Zrips.CMI.Modules.Worth.WorthItem;
 import fr.maxlego08.shop.api.ShopManager;
 import me.zachary.sellwand.commands.GiveCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
@@ -74,6 +76,11 @@ public final class Sellwand extends ZachCorePlugin {
             if(manager.getItemButton(itemStack).isPresent() && manager.getItemButton(itemStack).get().getSellPrice(player) != 0)
                 return manager.getItemButton(itemStack).get().getSellPrice(player);
             return -1.0;
+        }else if(getConfig().getString("Item price.Choice").equals("CMI") && Bukkit.getPluginManager().getPlugin("CMI") != null){
+            WorthItem worth = CMI.getInstance().getWorthManager().getWorth(itemStack);
+            if(worth == null)
+                return -1.0;
+            return worth.getSellPrice() * itemStack.getAmount();
         }
         return -1.0;
     }
