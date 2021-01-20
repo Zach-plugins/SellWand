@@ -9,6 +9,7 @@ import me.zachary.sellwand.files.MessageFile;
 import me.zachary.sellwand.listeners.LeftClickListener;
 import me.zachary.sellwand.listeners.RightClickListener;
 import me.zachary.sellwand.wands.SellWandBuilder;
+import me.zachary.updatechecker.Updatechecker;
 import me.zachary.zachcore.ZachCorePlugin;
 import me.zachary.zachcore.utils.Metrics;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
@@ -30,6 +31,7 @@ public final class Sellwand extends ZachCorePlugin {
         preEnable();
         EconomyManager.load();
         HologramManager.load(this);
+        Updatechecker.updateSongoda(this, 543);
         saveDefaultConfig();
 
         // Load zShop
