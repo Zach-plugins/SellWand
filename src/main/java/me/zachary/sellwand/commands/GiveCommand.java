@@ -57,6 +57,27 @@ public class GiveCommand extends Command {
 
     @Override
     public CommandResult onConsoleExecute(boolean b, String[] strings) {
+        if(strings.length < 4){
+            System.out.println("sellwandgive <user> <amount> <uses> <multiplier>");
+            return CommandResult.COMPLETED;
+        }
+        Player target = Bukkit.getPlayer(strings[0]);
+        if(target == null){
+            System.out.println("Player not found");
+            return CommandResult.COMPLETED;
+        }
+        int amount = 0;
+        int uses = 0;
+        double multiplier = 0D;
+        try {
+            amount = Integer.parseInt(strings[1]);
+            uses = Integer.parseInt(strings[2]);
+            multiplier = Double.parseDouble(strings[3]);
+        }catch (Exception e){
+            System.out.println("Invalid usage. Correct usage: /sellwandgive <user> <amount> <uses> <multiplier>");
+        }
+
+        PlayerInventoryUtils.GiveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
         return CommandResult.COMPLETED;
     }
 
