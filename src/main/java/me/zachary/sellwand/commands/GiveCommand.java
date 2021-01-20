@@ -78,6 +78,7 @@ public class GiveCommand extends Command {
         }
 
         PlayerInventoryUtils.GiveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
+        MessageUtils.sendMessage(target, plugin.getMessage().getString("Successful give"));
         return CommandResult.COMPLETED;
     }
 
