@@ -20,6 +20,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import su.nightexpress.quantumshop.ShopAPI;
+import su.nightexpress.quantumshop.modules.list.gui.types.BuyType;
 
 public final class Sellwand extends ZachCorePlugin {
     ShopManager manager;
@@ -64,6 +66,7 @@ public final class Sellwand extends ZachCorePlugin {
     }
 
     public Double getItemPrice(Player player, ItemStack itemStack){
+        final double[] amount = {-1.0};
         if(getConfig().getString("Item price.Choice").equals("Custom")){
             for (String item : getConfig().getStringList("Item price.Custom")) {
                 String[] split = item.split(",");
@@ -83,6 +86,17 @@ public final class Sellwand extends ZachCorePlugin {
             if(worth == null)
                 return -1.0;
             return worth.getSellPrice() * itemStack.getAmount();
+        }else if(getConfig().getString("Item price.Choice").equals("QuantumShop") && Bukkit.getPluginManager().getPlugin("QuantumShop") != null){
+            ShopAPI.getGUIShop().getShops().forEach(shopGUI -> {
+                shopGUI.getProducts().forEach((s, shopProduct) -> {
+                    if(shopProduct.getBuyItem().getType().name().equals(itemStack.getType().name())){
+                        if(shopProduct.getPossibleQuantity(player, BuyType.SELL) >= itemStack.getAmount()){
+                            amount[0] = (shopProduct.getSellPrice() * itemStack.getAmount());
+                        }
+                    }
+                });
+            });
+            return amount[0];
         }
         return -1.0;
     }

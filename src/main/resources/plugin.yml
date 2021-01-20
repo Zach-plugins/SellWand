@@ -3,5 +3,5 @@ version: ${project.version}
 main: me.zachary.sellwand.Sellwand
 api-version: 1.13
 authors: [ Zach_FR ]
-softdepend: [ ShopGUIPlus, HolographicDisplays, zShop, Vault, CMI ]
+softdepend: [ ShopGUIPlus, HolographicDisplays, zShop, Vault, CMI, QuantumShop ]
 description: Sell wand plugin

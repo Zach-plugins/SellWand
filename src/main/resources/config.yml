@@ -16,7 +16,7 @@ Sell wand:
 Log sell with sell wand in console: false
 
 Item price:
-  # You can chose price of item: "ShopGUIPlus", "zShop", "CMI", "Custom"
+  # You can chose price of item: "ShopGUIPlus", "zShop", "CMI", "QuantumShop", "Custom"
   Choice: Custom
 
   # FORMAT: MATERIALNAME,PRICE Price are per item
