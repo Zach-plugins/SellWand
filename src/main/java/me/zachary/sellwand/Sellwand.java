@@ -90,9 +90,7 @@ public final class Sellwand extends ZachCorePlugin {
             ShopAPI.getGUIShop().getShops().forEach(shopGUI -> {
                 shopGUI.getProducts().forEach((s, shopProduct) -> {
                     if(shopProduct.getBuyItem().getType().name().equals(itemStack.getType().name())){
-                        if(shopProduct.getPossibleQuantity(player, BuyType.SELL) >= itemStack.getAmount()){
-                            amount[0] = (shopProduct.getSellPrice() * itemStack.getAmount());
-                        }
+                        amount[0] = (shopProduct.getSellPrice() * itemStack.getAmount());
                     }
                 });
             });
