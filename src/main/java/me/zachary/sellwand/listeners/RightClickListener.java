@@ -9,6 +9,7 @@ import me.zachary.zachcore.utils.PlayerInventoryUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import me.zachary.zachcore.utils.xseries.XMaterial;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Barrel;
@@ -39,6 +40,8 @@ public class RightClickListener implements Listener {
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() == EquipmentSlot.OFF_HAND)
             return;
         Player player = event.getPlayer();
+        if(BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
+            return;
         Inventory contents = null;
         List<Material> shulkerBoxMaterial = Arrays.asList(
                 Material.SHULKER_BOX,

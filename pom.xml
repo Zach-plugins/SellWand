@@ -172,5 +172,11 @@
             <artifactId>updatechecker</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>nl.rutgerkok</groupId>
+            <artifactId>blocklocker</artifactId>
+            <version>1.9</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
