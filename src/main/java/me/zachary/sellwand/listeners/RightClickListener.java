@@ -40,17 +40,17 @@ public class RightClickListener implements Listener {
             if(event.getHand() == EquipmentSlot.OFF_HAND)
                 return;
         Player player = event.getPlayer();
-        if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
-            return;
-        Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
-        if(contents == null || contents.getContents() == null)
-            return;
         NBTItem item = null;
         double amount = 0D;
         int itemAmount = 0;
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
+            if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
+                return;
+            Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
+            if(contents == null || contents.getContents() == null)
+                return;
             CooldownBuilder.createCooldown("Use cooldown");
             if(!player.hasPermission("sellwand.use")){
                 MessageUtils.sendMessage(player, plugin.getMessage().getString("No permission"));
