@@ -2,10 +2,7 @@ package me.zachary.sellwand.listeners;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
-import me.zachary.zachcore.utils.CooldownBuilder;
-import me.zachary.zachcore.utils.MessageUtils;
-import me.zachary.zachcore.utils.PermissionUtils;
-import me.zachary.zachcore.utils.PlayerInventoryUtils;
+import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import me.zachary.zachcore.utils.xseries.XMaterial;
@@ -37,43 +34,15 @@ public class RightClickListener implements Listener {
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent event){
-        if(event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getHand() == EquipmentSlot.OFF_HAND)
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
+        if(!ReflectionUtils.getVersion().contains("1_8"))
+            if(event.getHand() == EquipmentSlot.OFF_HAND)
+                return;
         Player player = event.getPlayer();
-        if(BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
+        if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
             return;
-        Inventory contents = null;
-        List<Material> shulkerBoxMaterial = Arrays.asList(
-                Material.SHULKER_BOX,
-                Material.WHITE_SHULKER_BOX,
-                Material.ORANGE_SHULKER_BOX,
-                Material.MAGENTA_SHULKER_BOX,
-                Material.LIGHT_BLUE_SHULKER_BOX,
-                Material.YELLOW_SHULKER_BOX,
-                Material.LIME_SHULKER_BOX,
-                Material.PINK_SHULKER_BOX,
-                Material.GRAY_SHULKER_BOX,
-                Material.LIGHT_BLUE_SHULKER_BOX,
-                Material.CYAN_SHULKER_BOX,
-                Material.PURPLE_SHULKER_BOX,
-                Material.BLUE_SHULKER_BOX,
-                Material.BROWN_SHULKER_BOX,
-                Material.GREEN_SHULKER_BOX,
-                Material.CYAN_SHULKER_BOX,
-                Material.RED_SHULKER_BOX,
-                Material.BLACK_SHULKER_BOX
-        );
-        if(event.getClickedBlock().getBlockData().getMaterial() == Material.CHEST
-                || event.getClickedBlock().getBlockData().getMaterial() == Material.TRAPPED_CHEST){
-            Chest chests = (Chest) event.getClickedBlock().getState();
-            contents = chests.getInventory();
-        }else if(shulkerBoxMaterial.contains(event.getClickedBlock().getBlockData().getMaterial())){
-            ShulkerBox shulkerBox = (ShulkerBox) event.getClickedBlock().getState();
-            contents = shulkerBox.getInventory();
-        }else if(event.getClickedBlock().getBlockData().getMaterial() == Material.BARREL){
-            Barrel barrel = (Barrel) event.getClickedBlock().getState();
-            contents = barrel.getInventory();
-        }
+        Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
         if(contents == null || contents.getContents() == null)
             return;
         NBTItem item = null;
