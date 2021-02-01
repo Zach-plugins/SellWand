@@ -30,7 +30,6 @@ public final class Sellwand extends ZachCorePlugin {
     public void onEnable() {
         int pluginId = 9724;
         Metrics metrics = new Metrics(this, pluginId);
-        preEnable();
         EconomyManager.load();
         HologramManager.load(this);
         Updatechecker.updateSongoda(this, 543);
@@ -50,6 +49,7 @@ public final class Sellwand extends ZachCorePlugin {
         // Load Commands
         new GiveCommand(this);
         new ReloadCommand(this);
+        preEnable(this);
     }
 
     @Override
