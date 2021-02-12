@@ -15,6 +15,9 @@ Sell wand:
 
 Log sell with sell wand in console: false
 
+# Should we destroy wand when is got 0 use.
+Destroy wand: true
+
 Item price:
   # You can chose price of item: "ShopGUIPlus", "zShop", "CMI", "QuantumShop", "Custom"
   Choice: Custom

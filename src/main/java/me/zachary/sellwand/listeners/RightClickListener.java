@@ -81,7 +81,11 @@ public class RightClickListener implements Listener {
                 plugin.getLog().log("Player " + player.getName() + " sell " + itemAmount + " items for a total of " + EconomyManager.formatEconomy(amount));
             if(amount != 0D){
                 EconomyManager.deposit(player, amount);
-                PlayerInventoryUtils.SetInMainHand(player, plugin.getSellWandBuilder().getSellWand(1, multiplier, (uses - 1)));
+                uses = uses - 1;
+                if(plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
+                    PlayerInventoryUtils.SetInMainHand(player, null);
+                else
+                    PlayerInventoryUtils.SetInMainHand(player, plugin.getSellWandBuilder().getSellWand(1, multiplier, uses));
                 MessageUtils.sendMessage(player, plugin.getMessage().getString("Amount give")
                         .replace("%price%", EconomyManager.formatEconomy(amount))
                         .replace("%item_amount%", String.valueOf(itemAmount)));
