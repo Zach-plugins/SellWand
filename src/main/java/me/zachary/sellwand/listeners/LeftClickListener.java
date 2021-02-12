@@ -77,6 +77,7 @@ public class LeftClickListener implements Listener {
             else
                 hologramLoc = event.getClickedBlock().getLocation();
             hologramLoc.setDirection(player.getLocation().getDirection());
+            HologramManager.removeHologram(hologramLoc);
             HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount));
             Location finalHologramLoc = hologramLoc;
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
