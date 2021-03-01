@@ -129,7 +129,7 @@
         <dependency>
             <groupId>me.zachary</groupId>
             <artifactId>ZachCore</artifactId>
-            <version>0.7.19</version>
+            <version>0.7.21</version>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>
@@ -177,6 +177,13 @@
             <artifactId>blocklocker</artifactId>
             <version>1.9</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.gypopo</groupId>
+            <artifactId>economyshopgui</artifactId>
+            <version>3.0.4</version>
+            <scope>system</scope>
+            <systemPath>C:/lib/EconomyShopGUI-3.0.4.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

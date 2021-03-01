@@ -3,6 +3,7 @@ package me.zachary.sellwand;
 import com.Zrips.CMI.CMI;
 import com.Zrips.CMI.Modules.Worth.WorthItem;
 import fr.maxlego08.shop.api.ShopManager;
+import me.gypopo.economyshopgui.EconomyShopGUI;
 import me.zachary.sellwand.commands.GiveCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
 import me.zachary.sellwand.files.MessageFile;
@@ -17,14 +18,20 @@ import me.zachary.zachcore.utils.hooks.HologramManager;
 import net.brcdev.shopgui.ShopGuiPlusApi;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import su.nightexpress.quantumshop.ShopAPI;
-import su.nightexpress.quantumshop.modules.list.gui.types.BuyType;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Sellwand extends ZachCorePlugin {
     ShopManager manager;
+    private Map<Material, Double> itemPrice = new HashMap<Material, Double>();
 
     @Override
     public void onEnable() {
@@ -49,6 +56,8 @@ public final class Sellwand extends ZachCorePlugin {
         // Load Commands
         new GiveCommand(this);
         new ReloadCommand(this);
+        if(getConfig().getString("Item price.Choice").equals("EconomyShopGUI") && Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null)
+            loadEconomyShopGUI();
         preEnable(this);
     }
 
@@ -95,6 +104,12 @@ public final class Sellwand extends ZachCorePlugin {
                 });
             });
             return amount[0];
+        } else if(getConfig().getString("Item price.Choice").equals("EconomyShopGUI") && Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null){
+            itemPrice.forEach((material, aDouble) -> {
+                if(itemStack.getType() == material)
+                    amount[0] = aDouble;
+            });
+            return amount[0];
         }
         return -1.0;
     }
@@ -104,5 +119,15 @@ public final class Sellwand extends ZachCorePlugin {
         if (provider == null)
             return null;
         return provider.getProvider() != null ? (T) provider.getProvider() : null;
+    }
+
+    public void loadEconomyShopGUI(){
+        YamlConfiguration shopConfig = EconomyShopGUI.getInstance().loadConfiguration(new File(getDataFolder().getParent() + "/EconomyShopGUI/shops.yml"), "shops.yml");
+        for(String s : shopConfig.getKeys(false)){
+            ConfigurationSection configurationSection = shopConfig.getConfigurationSection(s);
+            for (int i = 1; i <= configurationSection.getKeys(false).size(); i++) {
+                itemPrice.put(Material.valueOf(configurationSection.getString(i + ".material")), configurationSection.getDouble(i + ".sell"));
+            }
+        }
     }
 }
