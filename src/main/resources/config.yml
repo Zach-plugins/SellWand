@@ -18,6 +18,9 @@ Log sell with sell wand in console: false
 # Should we destroy wand when is got 0 use.
 Destroy wand: true
 
+# Should we use WorldGuard protection (Flag: "CHEST_ACCESS")
+Use WorldGuard protection: true
+
 Item price:
   # You can chose price of item: "ShopGUIPlus", "zShop", "CMI", "QuantumShop", "EconomyShopGUI", "Custom"
   Choice: Custom

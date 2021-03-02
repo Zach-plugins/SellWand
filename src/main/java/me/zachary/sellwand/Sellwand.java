@@ -107,7 +107,7 @@ public final class Sellwand extends ZachCorePlugin {
         } else if(getConfig().getString("Item price.Choice").equals("EconomyShopGUI") && Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null){
             itemPrice.forEach((material, aDouble) -> {
                 if(itemStack.getType() == material)
-                    amount[0] = aDouble;
+                    amount[0] = aDouble * itemStack.getAmount();
             });
             return amount[0];
         }

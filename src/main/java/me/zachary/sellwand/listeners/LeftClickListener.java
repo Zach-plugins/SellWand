@@ -5,6 +5,7 @@ import me.zachary.sellwand.Sellwand;
 import me.zachary.zachcore.utils.MessageUtils;
 import me.zachary.zachcore.utils.ReflectionUtils;
 import me.zachary.zachcore.utils.StorageUtils;
+import me.zachary.zachcore.utils.WorldGuardUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -49,6 +50,8 @@ public class LeftClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
+            if(plugin.getConfig().getBoolean("Use WorldGuard protection") && !WorldGuardUtils.playerCanAccessChest(player))
+                return;
             if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
                 return;
             Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
