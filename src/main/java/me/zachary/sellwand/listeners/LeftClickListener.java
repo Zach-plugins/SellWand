@@ -50,7 +50,9 @@ public class LeftClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
-            if(plugin.getConfig().getBoolean("Use WorldGuard protection") && !WorldGuardUtils.playerCanAccessChest(player))
+            if(plugin.getConfig().getBoolean("Use WorldGuard protection") &&
+                    Bukkit.getPluginManager().getPlugin("WorldGuard") != null &&
+                    !WorldGuardUtils.canAccessChest(player))
                 return;
             if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
                 return;

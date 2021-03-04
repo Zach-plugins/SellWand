@@ -18,7 +18,7 @@ Log sell with sell wand in console: false
 # Should we destroy wand when is got 0 use.
 Destroy wand: true
 
-# Should we use WorldGuard protection (Flag: "CHEST_ACCESS")
+# Should we use WorldGuard protection (Flag: "chest-access")
 Use WorldGuard protection: true
 
 Item price:
