@@ -125,9 +125,15 @@ public final class Sellwand extends ZachCorePlugin {
         YamlConfiguration shopConfig = EconomyShopGUI.getInstance().loadConfiguration(new File(getDataFolder().getParent() + "/EconomyShopGUI/shops.yml"), "shops.yml");
         for(String s : shopConfig.getKeys(false)){
             ConfigurationSection configurationSection = shopConfig.getConfigurationSection(s);
-            for (int i = 1; i <= configurationSection.getKeys(false).size(); i++) {
-                itemPrice.put(Material.valueOf(configurationSection.getString(i + ".material")), configurationSection.getDouble(i + ".sell"));
+            for(String item : configurationSection.getKeys(false)){
+                itemPrice.put(Material.valueOf(configurationSection.getString(item + ".material")), configurationSection.getDouble(item + ".sell"));
             }
         }
+        getLog().log("Loaded " + itemPrice.size() + " items from EconomyShopGUI.");
+    }
+
+    @Override
+    public void onDataLoad() {
+
     }
 }
