@@ -8,6 +8,7 @@ import me.zachary.zachcore.utils.StorageUtils;
 import me.zachary.zachcore.utils.WorldGuardUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
+import me.zachary.zachcore.utils.hooks.ShopManager;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -69,7 +70,7 @@ public class LeftClickListener implements Listener {
                 ItemStack chestItem = contents.getItem(i);
                 Double price = 0D;
                 if (chestItem != null)
-                    price = plugin.getItemPrice(player, chestItem);
+                    price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
                 if (price != -1.0 && chestItem != null) {
                     itemAmount += chestItem.getAmount();
                     amount += price;

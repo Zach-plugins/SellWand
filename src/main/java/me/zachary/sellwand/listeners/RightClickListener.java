@@ -4,6 +4,7 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
+import me.zachary.zachcore.utils.hooks.ShopManager;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import me.zachary.zachcore.utils.xseries.XMaterial;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -73,7 +74,7 @@ public class RightClickListener implements Listener {
                 ItemStack chestItem = contents.getItem(i);
                 Double price = 0D;
                 if(chestItem != null)
-                    price = plugin.getItemPrice(player, chestItem);
+                    price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
                 if(price != -1.0 && chestItem != null){
                     contents.setItem(i, new ItemBuilder(XMaterial.AIR.parseMaterial()).build());
                     itemAmount += chestItem.getAmount();

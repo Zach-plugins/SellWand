@@ -68,6 +68,7 @@
                                     <include>me.zachary:ZachCore</include>
                                     <include>de.tr7zw:item-nbt-api</include>
                                     <include>me.zachary:updatechecker</include>
+                                    <include>org.codemc.worldguardwrapper:worldguardwrapper</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -78,6 +79,10 @@
                                 <relocation>
                                     <pattern>de.tr7zw.changeme.nbtapi</pattern>
                                     <shadedPattern>me.zachary.sellwand.nbtapi</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.codemc.worldguardwrapper</pattern>
+                                    <shadedPattern>${project.groupId}.sellwand.core.dependencies.org.codemc.worldguardwrapper</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -105,7 +110,7 @@
         <!-- ZachCore -->
         <repository>
             <id>private</id>
-            <url>http://51.254.247.74:90/private/</url>
+            <url>http://144.76.205.243:90/private/</url>
         </repository>
         <repository>
             <id>codemc-repo</id>
@@ -136,36 +141,6 @@
             <artifactId>item-nbt-api</artifactId>
             <version>2.7.1</version>
         </dependency>
-        <dependency>
-            <groupId>fr.maxlego08</groupId>
-            <artifactId>zshop</artifactId>
-            <version>2.0.1.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.brcdev-minecraft</groupId>
-            <artifactId>shopgui-api</artifactId>
-            <version>2.1.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.Zrips</groupId>
-            <artifactId>CMI</artifactId>
-            <version>8.7.12.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>su.nightexpress</groupId>
-            <artifactId>quantumshop</artifactId>
-            <version>3.10.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>su.nexmedia</groupId>
-            <artifactId>engine</artifactId>
-            <version>2.0.3</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- UpdateChecker -->
         <dependency>
             <groupId>me.zachary</groupId>
@@ -177,13 +152,6 @@
             <artifactId>blocklocker</artifactId>
             <version>1.9</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.gypopo</groupId>
-            <artifactId>economyshopgui</artifactId>
-            <version>3.0.4</version>
-            <scope>system</scope>
-            <systemPath>C:/lib/EconomyShopGUI-3.0.4.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

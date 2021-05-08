@@ -21,18 +21,6 @@ Destroy wand: true
 # Should we use WorldGuard protection (Flag: "chest-access")
 Use WorldGuard protection: true
 
-Item price:
-  # You can chose price of item: "ShopGUIPlus", "zShop", "CMI", "QuantumShop", "EconomyShopGUI", "Custom"
-  Choice: Custom
-
-  # FORMAT: MATERIALNAME,PRICE Price are per item
-  Custom:
-    - STONE,1
-    - COBBLESTONE,1
-    - DIRT,1
-    - GOLD_INGOT,1
-    - DIAMOND,10
-
 Hologram line:
   - "&6Item amount to sell in chest &e%amount% &6items."
   - "&6For a total of &e%price%"
