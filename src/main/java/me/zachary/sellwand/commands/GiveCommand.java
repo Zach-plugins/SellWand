@@ -74,7 +74,7 @@ public class GiveCommand extends Command {
             uses = Integer.parseInt(strings[2]);
             multiplier = Double.parseDouble(strings[3]);
         }catch (Exception e){
-            System.out.println("Invalid usage. Correct usage: /sellwandgive <user> <amount> <uses> <multiplier>");
+            System.out.println("Invalid usage. Correct usage: /sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
         }
 
         PlayerInventoryUtils.GiveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);

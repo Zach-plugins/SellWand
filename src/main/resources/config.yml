@@ -11,6 +11,7 @@ Sell wand:
     - "&eSell wand information:"
     - "&e Multiplier: &6%multiplier%x"
     - "&e Uses: &6%uses%"
+  Infinite: "Infinite"
 
 
 Log sell with sell wand in console: false

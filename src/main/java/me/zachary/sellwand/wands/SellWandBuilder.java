@@ -36,7 +36,7 @@ public class SellWandBuilder {
         List<String> lore = new ArrayList<>();
         for (String line : plugin.getConfig().getStringList("Sell wand.Lore")) {
             lore.add(line.replace("%multiplier%", String.valueOf(multiplier))
-                    .replace("%uses%", String.valueOf(uses)));
+                    .replace("%uses%", String.valueOf(uses >= 0 ? uses : plugin.getConfig().getString("Sell wand.Infinite"))));
         }
         return lore;
     }

@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Barrel;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
@@ -103,6 +104,10 @@ public class LeftClickListener implements Listener {
         }
         return line;
     }
+
+    /*private Location getHologramLocation(Player player, Block block){
+
+    }*/
 
     private double getDifferenceX(Player player){
         double direction = 0;
