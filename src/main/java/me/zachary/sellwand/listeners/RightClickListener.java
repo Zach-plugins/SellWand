@@ -1,5 +1,7 @@
 package me.zachary.sellwand.listeners;
 
+import com.intellectualcrafters.plot.api.PlotAPI;
+import com.intellectualcrafters.plot.object.PlotPlayer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.zachcore.utils.*;
@@ -53,6 +55,18 @@ public class RightClickListener implements Listener {
                 return;
             if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
                 return;
+            if(Bukkit.getPluginManager().getPlugin("PlotSquared") != null){
+                PlotAPI plotAPI = new PlotAPI();
+                PlotPlayer plotPlayer = plotAPI.wrapPlayer(player.getUniqueId());
+                if(plotPlayer.getCurrentPlot() == null)
+                    return;
+
+                if(!plotPlayer.getCurrentPlot().hasOwner())
+                    return;
+
+                if(!(plotPlayer.getCurrentPlot().isOwner(player.getUniqueId()) || (!plotPlayer.getCurrentPlot().getTrusted().isEmpty() && plotPlayer.getCurrentPlot().getTrusted().contains(plotPlayer.getUUID()))))
+                    return;
+            }
             Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
             if(contents == null || contents.getContents() == null)
                 return;
