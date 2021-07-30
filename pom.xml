@@ -6,7 +6,7 @@
 
     <groupId>me.zachary</groupId>
     <artifactId>sellwand</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
 
     <name>Sellwand</name>
@@ -127,7 +127,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- ZachCore -->
@@ -152,6 +152,13 @@
             <artifactId>blocklocker</artifactId>
             <version>1.9</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.intellectualsites</groupId>
+            <artifactId>plotsquared</artifactId>
+            <version>4.4.495</version>
+            <scope>system</scope>
+            <systemPath>C:/lib/PlotSquared-Bukkit-4.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

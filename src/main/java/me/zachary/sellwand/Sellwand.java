@@ -21,7 +21,7 @@ public final class Sellwand extends ZachCorePlugin {
         Metrics metrics = new Metrics(this, pluginId);
         EconomyManager.load();
         HologramManager.load(this);
-        Updatechecker.update(this, "sellwand");
+        //Updatechecker.update(this, "sellwand");
         saveDefaultConfig();
 
         ShopManager.load(this);
