@@ -11,13 +11,9 @@ import me.zachary.zachcore.utils.hooks.ShopManager;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Barrel;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -26,7 +22,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LeftClickListener implements Listener {
@@ -37,7 +32,7 @@ public class LeftClickListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onLeftClick(PlayerInteractEvent event){
         if(event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
