@@ -32,8 +32,10 @@ public class LeftClickListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onLeftClick(PlayerInteractEvent event){
+        if(event.isCancelled())
+            return;
         if(event.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
         if(!ReflectionUtils.getVersion().contains("1_8"))
@@ -46,24 +48,6 @@ public class LeftClickListener implements Listener {
         if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
-            if(plugin.getConfig().getBoolean("Use WorldGuard protection") &&
-                    Bukkit.getPluginManager().getPlugin("WorldGuard") != null &&
-                    !WorldGuardUtils.canAccessChest(player))
-                return;
-            if(Bukkit.getPluginManager().getPlugin("BlockLocker") != null && BlockLockerAPIv2.isProtected(event.getClickedBlock()) && !BlockLockerAPIv2.isOwner(player, event.getClickedBlock()))
-                return;
-            if(Bukkit.getPluginManager().getPlugin("PlotSquared") != null){
-                PlotAPI plotAPI = new PlotAPI();
-                PlotPlayer plotPlayer = plotAPI.wrapPlayer(player.getUniqueId());
-                if(plotPlayer.getCurrentPlot() == null)
-                    return;
-
-                if(!plotPlayer.getCurrentPlot().hasOwner())
-                    return;
-
-                if(!(plotPlayer.getCurrentPlot().isOwner(player.getUniqueId()) || (!plotPlayer.getCurrentPlot().getTrusted().isEmpty() && plotPlayer.getCurrentPlot().getTrusted().contains(plotPlayer.getUUID()))))
-                    return;
-            }
             Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
             if(contents == null || contents.getContents() == null)
                 return;
