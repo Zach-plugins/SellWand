@@ -19,9 +19,6 @@ Log sell with sell wand in console: false
 # Should we destroy wand when is got 0 use.
 Destroy wand: true
 
-# Should we use WorldGuard protection (Flag: "chest-access")
-Use WorldGuard protection: true
-
 Hologram line:
   - "&6Item amount to sell in chest &e%amount% &6items."
   - "&6For a total of &e%price%"
