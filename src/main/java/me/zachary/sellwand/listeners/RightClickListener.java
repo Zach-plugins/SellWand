@@ -1,7 +1,5 @@
 package me.zachary.sellwand.listeners;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.PlotPlayer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.zachcore.utils.*;
@@ -9,7 +7,6 @@ import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.ShopManager;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import me.zachary.zachcore.utils.xseries.XMaterial;
-import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

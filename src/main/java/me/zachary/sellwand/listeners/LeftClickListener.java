@@ -1,14 +1,14 @@
 package me.zachary.sellwand.listeners;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.PlotPlayer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
-import me.zachary.zachcore.utils.*;
+import me.zachary.zachcore.utils.MessageUtils;
+import me.zachary.zachcore.utils.ReflectionUtils;
+import me.zachary.zachcore.utils.ServerVersion;
+import me.zachary.zachcore.utils.StorageUtils;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import me.zachary.zachcore.utils.hooks.ShopManager;
-import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,7 +20,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 
 import java.util.ArrayList;
 import java.util.List;
