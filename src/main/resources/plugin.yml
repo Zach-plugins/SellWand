@@ -5,3 +5,19 @@ api-version: 1.13
 authors: [ Zach_FR ]
 softdepend: [ ShopGUIPlus, HolographicDisplays, zShop, Vault, CMI, QuantumShop, BlockLocker, EconomyShopGUI, WorldGuard, WorldEdit, EpicShop, BossShopPro, EconomyShopGUI-Premium ]
 description: Sell wand plugin
+commands:
+  sellwanddebug:
+    description: Gives info for support
+    permission: sellwand.debug
+    usage: "/<command>"
+    default: op
+  sellwandgive:
+    description: Grants the user a sell wand
+    permission: sellwand.give
+    usage: "/sellwandgive <user> <count> <uses> <multiplier>"
+    default: op
+  sellwandreload:
+    description: Reloads the plugin
+    permission: sellwand.reload
+    usage: "/<command>"
+    default: op
