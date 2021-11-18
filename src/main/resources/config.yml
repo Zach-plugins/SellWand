@@ -22,3 +22,6 @@ Destroy wand: true
 Hologram line:
   - "&6Item amount to sell in chest &e%amount% &6items."
   - "&6For a total of &e%price%"
+
+# After how many seconds hologram will be remove
+Hologram time: 5

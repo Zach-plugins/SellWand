@@ -83,7 +83,7 @@ public class LeftClickListener implements Listener {
                 public void run() {
                     HologramManager.removeHologram(finalHologramLoc);
                 }
-            }, 150L);
+            }, (plugin.getConfig().getInt("Hologram time", 5) * 20L));
         }
     }
 
