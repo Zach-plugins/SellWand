@@ -50,7 +50,7 @@ public class GiveCommand extends Command {
             return CommandResult.COMPLETED;
         }
 
-        PlayerInventoryUtils.GiveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
+        PlayerInventoryUtils.giveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
         MessageUtils.sendMessage(target, plugin.getMessage().getString("Successful give"));
         return CommandResult.COMPLETED;
     }
@@ -77,7 +77,7 @@ public class GiveCommand extends Command {
             System.out.println("Invalid usage. Correct usage: /sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
         }
 
-        PlayerInventoryUtils.GiveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
+        PlayerInventoryUtils.giveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
         MessageUtils.sendMessage(target, plugin.getMessage().getString("Successful give"));
         return CommandResult.COMPLETED;
     }
