@@ -63,7 +63,7 @@ public class LeftClickListener implements Listener {
                 Double price = 0D;
                 if (chestItem != null)
                     price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
-                if (price != -1.0 && chestItem != null) {
+                if (price >= 0 && chestItem != null) {
                     itemAmount += chestItem.getAmount();
                     amount += price;
                 }
