@@ -34,7 +34,7 @@ public class GiveCommand extends Command {
         int uses = 0;
         double multiplier = 0D;
         if(strings.length < 4){
-            MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses> <multiplier>");
+            MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
             return CommandResult.COMPLETED;
         }
         target = Bukkit.getPlayer(strings[0]);
@@ -43,7 +43,7 @@ public class GiveCommand extends Command {
             uses = Integer.parseInt(strings[2]);
             multiplier = Double.parseDouble(strings[3]);
         }catch (Exception e){
-            MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses> <multiplier>");
+            MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
         }
         if(target == null){
             MessageUtils.sendMessage(player, plugin.getMessage().getString("Player not found"));
@@ -58,7 +58,7 @@ public class GiveCommand extends Command {
     @Override
     public CommandResult onConsoleExecute(boolean b, String[] strings) {
         if(strings.length < 4){
-            System.out.println("sellwandgive <user> <amount> <uses> <multiplier>");
+            System.out.println("sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
             return CommandResult.COMPLETED;
         }
         Player target = Bukkit.getPlayer(strings[0]);
