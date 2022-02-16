@@ -45,7 +45,7 @@ public class LeftClickListener implements Listener {
         NBTItem item = null;
         double amount = 0D;
         int itemAmount = 0;
-        if(event.getItem() != null)
+        if(event.getItem() != null && !event.getItem().getType().isAir())
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
             event.getItem().setDurability((short) 0);
