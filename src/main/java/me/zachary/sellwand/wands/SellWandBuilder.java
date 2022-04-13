@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SellWandBuilder {
     private Sellwand plugin;
@@ -29,6 +30,7 @@ public class SellWandBuilder {
         sellWandNBT.setBoolean("Is a sell wand", true);
         sellWandNBT.setDouble("Multiplier", multiplier);
         sellWandNBT.setInteger("Uses", uses);
+        sellWandNBT.setUUID("UUID", UUID.randomUUID());
         return sellWandNBT.getItem();
     }
 

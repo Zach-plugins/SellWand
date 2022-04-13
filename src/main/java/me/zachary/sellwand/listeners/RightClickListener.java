@@ -39,7 +39,7 @@ public class RightClickListener implements Listener {
         NBTItem item = null;
         double amount = 0D;
         int itemAmount = 0;
-        if(event.getItem() != null && !event.getItem().getType().isAir())
+        if(event.getItem() != null)
             item = new NBTItem(event.getItem());
         if(item != null && item.getBoolean("Is a sell wand")){
             Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
