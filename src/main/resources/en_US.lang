@@ -1,0 +1,17 @@
+# General Messages
+messages:
+  prefix: '&8[&6Sellwand&8]'
+
+# Command Messages
+command:
+  no-permission: '&cYou do not have permission to do that.'
+  reload: '&aSuccessfully reloaded the configuration and language files.'
+  player-not-found: '&cCould not find a player with the name &7%player%&c.'
+  give-success: '&aSuccessfully gave &7%player% &aa Sellwand.'
+  receive-success: '&aYou have receive a sell wand.'
+
+sellwand:
+  no-uses: 'cThis sellwand have no more use.'
+  cooldown: '&cYou can use this sellwand again in &7%seconds%&c.'
+  sell-success: '&aYou sold &7%item_amount% &aitems for a total of &7%price%&a.'
+  sell-nothing: '&cNothing to sell in this chest.'
