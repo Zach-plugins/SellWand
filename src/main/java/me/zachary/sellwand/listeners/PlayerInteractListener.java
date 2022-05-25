@@ -143,11 +143,13 @@ public class PlayerInteractListener implements Listener {
 						.sendPrefixedMessage(player);
 				int cooldown = PermissionUtils.getNumberFromPermission(player, "sellwand.cooldown", false, 0);
 				CooldownBuilder.addCooldown("Use cooldown", player.getUniqueId(), cooldown);
-			} else
+				if(sellSound != null)
+					sellSound.play(player);
+			} else {
+				if(errorSound != null)
+					errorSound.play(player);
 				plugin.getLocale().getMessage("sellwand.sell-nothing").sendPrefixedMessage(player);
-
-			if(sellSound != null)
-				sellSound.play(player);
+			}
 		}
 	}
 
