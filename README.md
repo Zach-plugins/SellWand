@@ -27,9 +27,8 @@ Cooldown permission (If not set, no cooldown) - `sellwand.cooldown.<seconds>`
 
  * Hologram plugin ([GHolo](https://www.spigotmc.org/resources/gholo-the-new-modern-holo-plugin-1-9-x-1-18-x.70913/), [DecentHolograms](https://www.spigotmc.org/resources/decent-holograms-1-8-1-18-2-papi-support-no-dependencies.96927/), and [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays))
  * [Vault](https://www.spigotmc.org/resources/vault.34315/)
- * [Economy plugin](https://essentialsx.net/downloads.html) (all Vault econony plugins are supported)
+ * [Economy plugin](https://essentialsx.net/downloads.html) (all Vault economy plugins are supported)
  * (Optional) Shop plugin ([ShopGUIPlus](https://www.spigotmc.org/resources/shopgui-1-8-1-18.6515/), [zShop](https://www.spigotmc.org/resources/zshop-1-8-1-18-advanced-inventory-plugin.74073/), [QuantumShop](https://www.spigotmc.org/resources/%E1%B4%BE%E1%B4%BF%E1%B4%B1%E1%B4%B9%E1%B4%B5%E1%B5%81%E1%B4%B9-excellentshop-advanced-3-in-1-shop-plugin-1-16-1-18.50696/), [EpicShop](https://www.spigotmc.org/resources/epicshop-a-gui-based-shop-system.91348/), [CMI](https://www.spigotmc.org/resources/cmi-298-commands-insane-kits-portals-essentials-economy-mysql-sqlite-much-more.3742/) and [EconomyShopGUI](https://www.spigotmc.org/resources/economyshopgui.69927/))
- * (Optional) Anti-grief plugin ([BlockLocker](https://www.spigotmc.org/resources/blocklocker.3268/) and [Worldguard](https://dev.bukkit.org/projects/worldguard))
 ## Images
 ![usage](Img/usage.gif)
 ![thumbnail](Img/thumbnail.png)
