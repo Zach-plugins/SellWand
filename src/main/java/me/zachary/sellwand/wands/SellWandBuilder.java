@@ -29,7 +29,7 @@ public class SellWandBuilder {
 		NBTItem sellWandNBT = new NBTItem(sellWand.build());
 		sellWandNBT.setDouble("Multiplier", multiplier);
 		sellWandNBT.setInteger("Uses", uses);
-		sellWandNBT.setUUID("UUID_Sellwand", UUID.randomUUID());
+		sellWandNBT.setObject("UUID_Sellwand", UUID.randomUUID());
 		return sellWandNBT.getItem();
 	}
 
