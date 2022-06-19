@@ -21,7 +21,9 @@ public class SellWandBuilder {
 
 	public ItemStack getSellWand(int amount, double multiplier, int uses) {
 		ItemBuilder sellWand = new ItemBuilder(XMaterial.valueOf(plugin.getConfig().getString("Sell wand.Item")).parseMaterial())
-				.name(plugin.getConfig().getString("Sell wand.Name").replace("%multiplier%", String.valueOf(multiplier)))
+				.name(plugin.getConfig().getString("Sell wand.Name")
+						.replace("%multiplier%", String.valueOf(multiplier))
+						.replace("%uses%", String.valueOf(uses >= 0 ? uses : plugin.getConfig().getString("Sell wand.Infinite"))))
 				.amount(amount)
 				.lore(getLore(multiplier, uses));
 		if (plugin.getConfig().getBoolean("Sell wand.Glowing"))
