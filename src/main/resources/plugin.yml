@@ -3,5 +3,5 @@ version: ${project.version}
 main: me.zachary.sellwand.Sellwand
 api-version: 1.13
 authors: [ Zach_FR ]
-softdepend: [ ShopGUIPlus, HolographicDisplays, DecentHolograms, GHolo, zShop, Vault, CMI, QuantumShop, BlockLocker, EconomyShopGUI, WorldGuard, WorldEdit, EpicShop, BossShopPro, EconomyShopGUI-Premium ]
+softdepend: [ ShopGUIPlus, HolographicDisplays, DecentHolograms, GHolo, zShop, Vault, CMI, ExcellentShop, BlockLocker, EconomyShopGUI, WorldGuard, WorldEdit, EpicShop, BossShopPro, EconomyShopGUI-Premium, WildChests ]
 description: Sell wand plugin

@@ -1,5 +1,8 @@
 package me.zachary.sellwand.listeners;
 
+import com.bgsoftware.wildchests.api.WildChestsAPI;
+import com.bgsoftware.wildchests.api.objects.ChestType;
+import com.bgsoftware.wildchests.api.objects.chests.StorageChest;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.zachcore.utils.*;
@@ -19,6 +22,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlayerInteractListener implements Listener {
@@ -69,26 +73,48 @@ public class PlayerInteractListener implements Listener {
 			return;
 		}
 
-		Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
-		if (contents == null)
-			return;
-
-		event.setCancelled(true);
-
-		double multiplier = item.getDouble("Multiplier");
 		double amount = 0D;
 		int itemAmount = 0;
-		for (int i = 0; i < contents.getContents().length; i++) {
-			ItemStack chestItem = contents.getItem(i);
-			Double price = 0D;
-			if (chestItem != null)
-				price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
-			if (price >= 0 && chestItem != null) {
-				if(Action.RIGHT_CLICK_BLOCK.equals(event.getAction())) contents.setItem(i, XMaterial.AIR.parseItem());
-				itemAmount += chestItem.getAmount();
-				amount += price;
+
+		if(Bukkit.getPluginManager().isPluginEnabled("WildChests") && WildChestsAPI.getChest(event.getClickedBlock().getLocation()) instanceof StorageChest){
+			com.bgsoftware.wildchests.api.objects.chests.Chest chest = WildChestsAPI.getChest(event.getClickedBlock().getLocation());
+			if(chest != null && chest.getChestType().equals(ChestType.STORAGE_UNIT)) {
+				event.setCancelled(true);
+				StorageChest storageChest = (StorageChest) chest;
+				ItemStack itemStack = storageChest.getItemStack();
+
+				double price = ShopManager.getSellPrice(player, itemStack, Integer.parseInt(String.valueOf(storageChest.getAmount())));
+
+				if(price >= 0D) {
+					amount += price;
+					itemAmount += Integer.parseInt(String.valueOf(storageChest.getAmount()));
+					if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
+						storageChest.setAmount(0);
+						storageChest.update();
+					}
+				}
+			}
+		}else {
+			Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
+			if (contents == null) {
+				return;
+			}
+			event.setCancelled(true);
+
+			for (int i = 0; i < contents.getContents().length; i++) {
+				ItemStack chestItem = contents.getItem(i);
+				double price = 0D;
+				if (chestItem != null) {
+					price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
+				}
+				if (price >= 0 && chestItem != null) {
+					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
+					itemAmount += chestItem.getAmount();
+					amount += price;
+				}
 			}
 		}
+		double multiplier = item.getDouble("Multiplier");
 		amount = amount * multiplier;
 
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
