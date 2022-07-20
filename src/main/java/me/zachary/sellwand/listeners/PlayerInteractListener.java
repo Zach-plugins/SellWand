@@ -73,6 +73,14 @@ public class PlayerInteractListener implements Listener {
 			return;
 		}
 
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK && CooldownBuilder.isCooldown("Use cooldown", player.getUniqueId())) {
+			event.setCancelled(true);
+			plugin.getLocale().getMessage("sellwand.cooldown")
+					.processPlaceholder("seconds", CooldownBuilder.getCooldown("Use cooldown", player.getUniqueId()) / 1000)
+					.sendPrefixedMessage(player);
+			return;
+		}
+
 		double amount = 0D;
 		int itemAmount = 0;
 
@@ -141,13 +149,6 @@ public class PlayerInteractListener implements Listener {
 				plugin.getLocale().getMessage("sellwand.no-uses").sendPrefixedMessage(player);
 				if(errorSound != null)
 					errorSound.play(player);
-				return;
-			}
-
-			if (CooldownBuilder.isCooldown("Use cooldown", player.getUniqueId())) {
-				plugin.getLocale().getMessage("sellwand.cooldown")
-						.processPlaceholder("seconds", CooldownBuilder.getCooldown("Use cooldown", player.getUniqueId()) / 1000)
-						.sendPrefixedMessage(player);
 				return;
 			}
 
