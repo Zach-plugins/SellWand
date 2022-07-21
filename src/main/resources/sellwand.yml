@@ -12,6 +12,10 @@ sellwand:
       - "&eSell wand information:"
       - "&e Multiplier: &6%multiplier%x"
       - "&e Uses: &6%uses%"
+      - ""
+      - "&eStatistics:"
+      - "&e Total item sold: &6%total_item%"
+      - "&e Total sold price: &6%total_sold_price%&e$"
   tier_2:
     name: "&e&lTier 2 sell wand"
     material: STICK
@@ -25,6 +29,10 @@ sellwand:
       - "&eSell wand information:"
       - "&e Multiplier: &6%multiplier%x"
       - "&e Uses: &6%uses%"
+      - ""
+      - "&eStatistics:"
+      - "&e Total item sold: &6%total_item%"
+      - "&e Total sold price: &6%total_sold_price%&e$"
   tier_3:
     name: "&a&lTier 3 sell wand"
     material: STICK
@@ -38,3 +46,7 @@ sellwand:
       - "&eSell wand information:"
       - "&e Multiplier: &6%multiplier%x"
       - "&e Uses: &6Infinite"
+      - ""
+      - "&eStatistics:"
+      - "&e Total item sold: &6%total_item%"
+      - "&e Total sold price: &6%total_sold_price%&e$"

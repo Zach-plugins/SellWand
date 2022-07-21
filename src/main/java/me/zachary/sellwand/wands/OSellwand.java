@@ -51,29 +51,34 @@ public class OSellwand {
 	}
 
 	public ItemStack getSellWand(){
-		return getSellWand(null);
+		return getSellWand(null, 0, 0D);
 	}
 
-	public ItemStack getSellWand(Integer uses) {
+	public ItemStack getSellWand(Integer uses, Integer item, Double price) {
 		ItemBuilder sellWand = new ItemBuilder(material.parseItem())
 				.name(name.replace("%multiplier%", String.valueOf(multiplier))
 						.replace("%uses%", String.valueOf(uses == null ? this.uses : uses)))
-				.lore(getLore(uses));
+				.lore(getLore(uses, item, price));
 		if (glowing)
 			sellWand.enchant(Enchantment.ARROW_INFINITE, 1).flag(ItemFlag.HIDE_ENCHANTS);
 		NBTItem sellWandNBT = new NBTItem(sellWand.build());
 		sellWandNBT.setString("id", id);
 		sellWandNBT.setDouble("Multiplier", multiplier);
 		sellWandNBT.setInteger("Uses", (uses == null ? this.uses : uses));
+		sellWandNBT.setInteger("total_item", item);
+		sellWandNBT.setDouble("total_sold_price", price);
 		sellWandNBT.setObject("UUID_Sellwand", UUID.randomUUID());
 		return sellWandNBT.getItem();
 	}
 
-	private List<String> getLore(Integer uses) {
+	private List<String> getLore(Integer uses, Integer item, Double price) {
 		List<String> lore = new ArrayList<>();
 		for (String line : this.lore) {
 			lore.add(line.replace("%multiplier%", String.valueOf(multiplier))
-					.replace("%uses%", String.valueOf(uses == null ? this.uses : uses)));
+					.replace("%uses%", String.valueOf(uses == null ? this.uses : uses))
+					.replace("%total_item%", String.valueOf(item))
+					.replace("%total_sold_price%", String.valueOf(price.intValue()))
+			);
 		}
 		return lore;
 	}

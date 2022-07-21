@@ -162,7 +162,8 @@ public class PlayerInteractListener implements Listener {
 					if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
 						event.getItem().setAmount(0);
 					else
-						PlayerInventoryUtils.setInMainHand(player, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id"))).getSellWand(uses));
+						PlayerInventoryUtils.setInMainHand(player, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
+								.getSellWand(uses, (item.getInteger("total_item") + itemAmount), (item.getDouble("total_sold_price") + amount)));
 				}
 				plugin.getLocale().getMessage("sellwand.sell-success")
 						.processPlaceholder("price", EconomyManager.formatEconomy(amount))
