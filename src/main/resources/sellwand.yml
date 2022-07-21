@@ -1,0 +1,40 @@
+sellwand:
+  tier_1:
+    name: "&6&lTier 1 sell wand"
+    material: STICK
+    glowing: true
+    multiplier: 1.0
+    uses: 100
+    lore:
+      - "&6Right-Click &eon chest to"
+      - "&esell his content!"
+      - ""
+      - "&eSell wand information:"
+      - "&e Multiplier: &6%multiplier%x"
+      - "&e Uses: &6%uses%"
+  tier_2:
+    name: "&e&lTier 2 sell wand"
+    material: STICK
+    glowing: true
+    multiplier: 1.5
+    uses: 500
+    lore:
+      - "&6Right-Click &eon chest to"
+      - "&esell his content!"
+      - ""
+      - "&eSell wand information:"
+      - "&e Multiplier: &6%multiplier%x"
+      - "&e Uses: &6%uses%"
+  tier_3:
+    name: "&a&lTier 3 sell wand"
+    material: STICK
+    glowing: true
+    multiplier: 2.0
+    uses: -1
+    lore:
+      - "&6Right-Click &eon chest to"
+      - "&esell his content!"
+      - ""
+      - "&eSell wand information:"
+      - "&e Multiplier: &6%multiplier%x"
+      - "&e Uses: &6Infinite"

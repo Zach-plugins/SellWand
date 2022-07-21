@@ -9,6 +9,7 @@ command:
   player-not-found: '&cCould not find a player with the name &7%player%&c.'
   give-success: '&aSuccessfully gave &7%player% &aa Sellwand.'
   receive-success: '&aYou have receive a sell wand.'
+  sellwand-not-found: '&cCould not find a sellwand with the id &7%sellwand%&c.'
 
 sellwand:
   no-uses: '&cThis sellwand have no more use.'

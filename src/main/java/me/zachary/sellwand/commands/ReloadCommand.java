@@ -23,8 +23,7 @@ public class ReloadCommand extends Command {
 			plugin.getLocale().getMessage("command.no-permission").sendPrefixedMessage(player);
 			return CommandResult.COMPLETED;
 		}
-		plugin.saveDefaultConfig();
-		plugin.reloadConfig();
+		plugin.reload();
 		plugin.getLocale().getMessage("command.reload").sendPrefixedMessage(player);
 		return CommandResult.COMPLETED;
 	}

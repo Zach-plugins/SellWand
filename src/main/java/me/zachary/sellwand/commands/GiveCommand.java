@@ -1,6 +1,7 @@
 package me.zachary.sellwand.commands;
 
 import me.zachary.sellwand.Sellwand;
+import me.zachary.sellwand.wands.OSellwand;
 import me.zachary.zachcore.commands.Command;
 import me.zachary.zachcore.commands.CommandResult;
 import me.zachary.zachcore.utils.MessageUtils;
@@ -31,29 +32,29 @@ public class GiveCommand extends Command {
 			return CommandResult.COMPLETED;
 		}
 		Player target = null;
-		int amount = 0;
-		int uses = 0;
-		double multiplier = 1D;
-		if (strings.length < 4) {
-			MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
+		if (strings.length < 2) {
+			MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <player> <sellwand>");
 			return CommandResult.COMPLETED;
 		}
 		target = Bukkit.getPlayer(strings[0]);
-		try {
-			amount = Integer.parseInt(strings[1]);
-			uses = Integer.parseInt(strings[2]);
-			multiplier = Double.parseDouble(strings[3]);
-		} catch (Exception e) {
-			MessageUtils.sendMessage(player, "&cInvalid usage. &eCorrect usage: &6/sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
-		}
 		if (target == null) {
 			plugin.getLocale().getMessage("command.player-not-found")
 					.processPlaceholder("player", strings[0])
 					.sendPrefixedMessage(player);
 			return CommandResult.COMPLETED;
 		}
+		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings[1]);
 
-		PlayerInventoryUtils.giveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
+		if (sellwand == null) {
+			plugin.getLocale().getMessage("command.sellwand-not-found")
+					.processPlaceholder("sellwand", strings[1])
+					.sendPrefixedMessage(player);
+			return CommandResult.COMPLETED;
+		}
+
+		PlayerInventoryUtils.giveItem(target, sellwand.getSellWand(), true);
+
+
 		plugin.getLocale().getMessage("command.give-success")
 				.processPlaceholder("player", target.getName())
 				.sendPrefixedMessage(player);
@@ -64,8 +65,8 @@ public class GiveCommand extends Command {
 
 	@Override
 	public CommandResult onConsoleExecute(boolean b, String[] strings) {
-		if (strings.length < 4) {
-			System.out.println("sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
+		if (strings.length < 2) {
+			System.out.println("sellwandgive <player> <sellwand>");
 			return CommandResult.COMPLETED;
 		}
 		Player target = Bukkit.getPlayer(strings[0]);
@@ -73,18 +74,16 @@ public class GiveCommand extends Command {
 			System.out.println("Player not found");
 			return CommandResult.COMPLETED;
 		}
-		int amount = 0;
-		int uses = 0;
-		double multiplier = 0D;
-		try {
-			amount = Integer.parseInt(strings[1]);
-			uses = Integer.parseInt(strings[2]);
-			multiplier = Double.parseDouble(strings[3]);
-		} catch (Exception e) {
-			System.out.println("Invalid usage. Correct usage: /sellwandgive <user> <amount> <uses/\"-1\"=infinite uses> <multiplier>");
+		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings[1]);
+
+		if (sellwand == null) {
+			plugin.getLocale().getMessage("command.sellwand-not-found")
+					.processPlaceholder("sellwand", strings[1])
+					.sendPrefixedMessage(Bukkit.getConsoleSender());
+			return CommandResult.COMPLETED;
 		}
 
-		PlayerInventoryUtils.giveItem(target, plugin.getSellWandBuilder().getSellWand(amount, multiplier, uses), true);
+		PlayerInventoryUtils.giveItem(target, sellwand.getSellWand(), true);
 		plugin.getLocale().getMessage("command.give-success")
 				.processPlaceholder("player", target.getName())
 				.sendPrefixedMessage(Bukkit.getConsoleSender());
@@ -97,11 +96,7 @@ public class GiveCommand extends Command {
 		if (args.length == 1) {
 			arg.addAll(Bukkit.getServer().getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
 		} else if (args.length == 2) {
-			arg.add("1");
-		} else if (args.length == 3) {
-			arg.add("100");
-		} else if (args.length == 4) {
-			arg.add("1.0");
+			arg.addAll(plugin.getSellWandManager().getSellwands().stream().map(OSellwand::getId).collect(Collectors.toList()));
 		}
 		return arg;
 	}
