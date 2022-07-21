@@ -63,6 +63,23 @@ public final class Sellwand extends ZachCorePlugin {
 			e.printStackTrace();
 		}
 
+		if(getConfig().isSet("Sell wand")){
+			sellWandConfig.set("sellwand.old.name", getConfig().getString("Sell wand.Name"));
+			sellWandConfig.set("sellwand.old.material", getConfig().getString("Sell wand.Item"));
+			sellWandConfig.set("sellwand.old.glowing", getConfig().getBoolean("Sell wand.Glowing"));
+			sellWandConfig.set("sellwand.old.multiplier", 1.0D);
+			sellWandConfig.set("sellwand.old.uses", 100);
+			sellWandConfig.set("sellwand.old.lore", getConfig().getStringList("Sell wand.Lore"));
+			try {
+				sellWandConfig.save(sellWandConfigFile);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			getConfig().set("Sell wand", null);
+			saveConfig();
+			reloadConfig();
+		}
+
 		sellWandManager = new SellWandManager(this);
 		this.setLocale(getConfig().getString("system.locale"), true);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> ShopManager.load(this), 60L);

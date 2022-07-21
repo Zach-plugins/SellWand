@@ -43,7 +43,7 @@ public class GiveCommand extends Command {
 					.sendPrefixedMessage(player);
 			return CommandResult.COMPLETED;
 		}
-		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings[1]);
+		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings.length > 3 ? "old" : strings[1]);
 
 		if (sellwand == null) {
 			plugin.getLocale().getMessage("command.sellwand-not-found")
@@ -74,7 +74,7 @@ public class GiveCommand extends Command {
 			System.out.println("Player not found");
 			return CommandResult.COMPLETED;
 		}
-		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings[1]);
+		OSellwand sellwand = plugin.getSellWandManager().getSellwand(strings.length > 3 ? "old" : strings[1]);
 
 		if (sellwand == null) {
 			plugin.getLocale().getMessage("command.sellwand-not-found")
