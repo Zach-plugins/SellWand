@@ -157,14 +157,13 @@ public class PlayerInteractListener implements Listener {
 
 			if (amount != 0D) {
 				EconomyManager.deposit(player, amount);
-				if (uses != -1) {
+				if (uses != -1)
 					--uses;
-					if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
-						event.getItem().setAmount(0);
-					else
-						PlayerInventoryUtils.setInMainHand(player, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
-								.getSellWand(uses, (item.getInteger("total_item") + itemAmount), (item.getDouble("total_sold_price") + amount)));
-				}
+				if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
+					event.getItem().setAmount(0);
+				else
+					PlayerInventoryUtils.setInMainHand(player, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
+							.getSellWand(uses, (item.getInteger("total_item") + itemAmount), (item.getDouble("total_sold_price") + amount)));
 				plugin.getLocale().getMessage("sellwand.sell-success")
 						.processPlaceholder("price", EconomyManager.formatEconomy(amount))
 						.processPlaceholder("item_amount", String.valueOf(itemAmount))
