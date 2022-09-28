@@ -168,8 +168,10 @@ public class PlayerInteractListener implements Listener {
 						.processPlaceholder("price", EconomyManager.formatEconomy(amount))
 						.processPlaceholder("item_amount", String.valueOf(itemAmount))
 						.sendPrefixedMessage(player);
-				int cooldown = PermissionUtils.getNumberFromPermission(player, "sellwand.cooldown", false, 0);
-				CooldownBuilder.addCooldown("Use cooldown", player.getUniqueId(), cooldown);
+				if(!PermissionUtils.hasPermission(player, "sellwand.cooldown.bypass")){
+					int cooldown = PermissionUtils.getNumberFromPermission(player, "sellwand.cooldown", false, 0);
+					CooldownBuilder.addCooldown("Use cooldown", player.getUniqueId(), cooldown);
+				}
 				if(sellSound != null)
 					sellSound.play(player);
 			} else {
