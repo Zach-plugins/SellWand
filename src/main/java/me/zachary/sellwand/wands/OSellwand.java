@@ -21,14 +21,19 @@ public class OSellwand {
 
 	private List<String> lore;
 	private Double multiplier;
-	private Integer uses;
+	private Integer uses, modelData;
 
 	public OSellwand(String id, String name, Boolean glowing, String material, List<String> lore, Double multiplier, int uses) {
 		this.id = id;
 		this.name = name;
 		this.glowing = glowing;
 		try {
-			this.material = XMaterial.valueOf(material.toUpperCase());
+			if(material.contains(":")){
+				String[] split = material.split(":");
+				this.material = XMaterial.valueOf(split[0]);
+				this.modelData = Integer.parseInt(split[1]);
+			}else
+				this.material = XMaterial.valueOf(material);
 		} catch (Exception e) {
 			Bukkit.getLogger().info("[Sellwand] The material " + material + " is not found in sellwand id " + id);
 			this.material = XMaterial.STICK;
@@ -68,6 +73,8 @@ public class OSellwand {
 		sellWandNBT.setInteger("total_item", item);
 		sellWandNBT.setDouble("total_sold_price", price);
 		sellWandNBT.setObject("UUID_Sellwand", UUID.randomUUID());
+		if(modelData != null)
+			sellWandNBT.setInteger("CustomModelData", modelData);
 		return sellWandNBT.getItem();
 	}
 
