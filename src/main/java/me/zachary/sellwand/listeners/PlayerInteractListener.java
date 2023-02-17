@@ -119,6 +119,7 @@ public class PlayerInteractListener implements Listener {
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
 					itemAmount += chestItem.getAmount();
 					amount += price;
+					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
 				}
 			}
 		}
@@ -160,7 +161,7 @@ public class PlayerInteractListener implements Listener {
 				if (uses != -1)
 					--uses;
 				if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
-					event.getItem().setAmount(0);
+					PlayerInventoryUtils.setInMainHand(player, null);
 				else
 					PlayerInventoryUtils.setInMainHand(player, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
 							.getSellWand(uses, (item.getInteger("total_item") + itemAmount), (item.getDouble("total_sold_price") + amount)));
