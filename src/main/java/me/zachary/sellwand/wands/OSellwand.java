@@ -55,6 +55,10 @@ public class OSellwand {
 		return uses;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public ItemStack getSellWand(){
 		return getSellWand(null, 0, 0D);
 	}

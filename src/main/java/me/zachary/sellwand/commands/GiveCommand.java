@@ -59,6 +59,7 @@ public class GiveCommand extends Command {
 				.processPlaceholder("player", target.getName())
 				.sendPrefixedMessage(player);
 		plugin.getLocale().getMessage("command.receive-success")
+				.processPlaceholder("sellwand_name", sellwand.getName())
 				.sendPrefixedMessage(target);
 		return CommandResult.COMPLETED;
 	}
@@ -87,6 +88,10 @@ public class GiveCommand extends Command {
 		plugin.getLocale().getMessage("command.give-success")
 				.processPlaceholder("player", target.getName())
 				.sendPrefixedMessage(Bukkit.getConsoleSender());
+
+		plugin.getLocale().getMessage("command.receive-success")
+				.processPlaceholder("sellwand_name", sellwand.getName())
+				.sendPrefixedMessage(target);
 		return CommandResult.COMPLETED;
 	}
 
