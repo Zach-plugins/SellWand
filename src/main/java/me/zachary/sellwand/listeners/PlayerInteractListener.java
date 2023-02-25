@@ -47,7 +47,7 @@ public class PlayerInteractListener implements Listener {
 		if (event.isCancelled() ||
 				!(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) ||
 				(!ReflectionUtils.getVersion().contains("1_8") && event.getHand() == EquipmentSlot.OFF_HAND) ||
-				event.getItem() == null)
+				event.getItem() == null || event.getItem().getType() == XMaterial.AIR.parseMaterial())
 			return;
 
 		/*
