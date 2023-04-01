@@ -119,6 +119,7 @@ public class PlayerInteractListener implements Listener {
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
 					itemAmount += chestItem.getAmount();
 					amount += price;
+
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
 				}
 			}
