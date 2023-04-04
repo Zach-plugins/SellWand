@@ -5,6 +5,8 @@ import com.bgsoftware.wildchests.api.objects.ChestType;
 import com.bgsoftware.wildchests.api.objects.chests.StorageChest;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
+import me.zachary.sellwand.api.events.SellwandHologramEvent;
+import me.zachary.sellwand.api.events.SellwandSellEvent;
 import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
@@ -21,9 +23,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PlayerInteractListener implements Listener {
 	private final Sellwand plugin;
@@ -83,6 +83,7 @@ public class PlayerInteractListener implements Listener {
 
 		double amount = 0D;
 		int itemAmount = 0;
+		Map<Integer, ItemStack> items = new HashMap<>();
 
 		if(Bukkit.getPluginManager().isPluginEnabled("WildChests") && WildChestsAPI.getChest(event.getClickedBlock().getLocation()) instanceof StorageChest){
 			com.bgsoftware.wildchests.api.objects.chests.Chest chest = WildChestsAPI.getChest(event.getClickedBlock().getLocation());
@@ -96,6 +97,7 @@ public class PlayerInteractListener implements Listener {
 				if(price >= 0D) {
 					amount += price;
 					itemAmount += Integer.parseInt(String.valueOf(storageChest.getAmount()));
+					items.put(0, itemStack);
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
 						storageChest.setAmount(0);
 						storageChest.update();
@@ -119,6 +121,7 @@ public class PlayerInteractListener implements Listener {
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
 					itemAmount += chestItem.getAmount();
 					amount += price;
+					items.put(i, chestItem);
 
 					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
 				}
@@ -135,6 +138,14 @@ public class PlayerInteractListener implements Listener {
 			else
 				hologramLoc = event.getClickedBlock().getLocation();
 			hologramLoc.setDirection(player.getLocation().getDirection());
+
+			// Call hologram event
+			SellwandHologramEvent sellwandHologramEvent = new SellwandHologramEvent(player, hologramLoc, itemAmount, amount, items);
+			Bukkit.getPluginManager().callEvent(sellwandHologramEvent);
+
+			if (sellwandHologramEvent.isCancelled())
+				return;
+
 			HologramManager.removeHologram(hologramLoc);
 			HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount));
 			Location finalHologramLoc = hologramLoc;
@@ -147,6 +158,14 @@ public class PlayerInteractListener implements Listener {
 		} else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			// Sell
 			int uses = item.getInteger("Uses");
+
+			// Call sell event
+			SellwandSellEvent SellwandSellEvent = new SellwandSellEvent(player, uses, itemAmount, amount, items);
+			Bukkit.getPluginManager().callEvent(SellwandSellEvent);
+
+			if (SellwandSellEvent.isCancelled())
+				return;
+
 			if (uses == 0) {
 				plugin.getLocale().getMessage("sellwand.no-uses").sendPrefixedMessage(player);
 				if(errorSound != null)
