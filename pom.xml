@@ -6,7 +6,7 @@
 
     <groupId>me.zachary</groupId>
     <artifactId>sellwand</artifactId>
-    <version>1.5.4</version>
+    <version>1.5.5</version>
     <packaging>jar</packaging>
 
     <name>Sellwand</name>
@@ -126,8 +126,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <version>1.20.1-R0.1-SNAPSHOT</version>
         </dependency>
         <!-- ZachCore -->
         <dependency>
@@ -138,7 +137,7 @@
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
-            <version>2.11.2</version>
+            <version>2.11.3</version>
         </dependency>
         <!-- UpdateChecker -->
         <!-- <dependency>

@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -42,11 +43,10 @@ public class PlayerInteractListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.isCancelled() ||
 				!(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) ||
-				(!ReflectionUtils.getVersion().contains("1_8") && event.getHand() == EquipmentSlot.OFF_HAND) ||
 				event.getItem() == null || event.getItem().getType() == XMaterial.AIR.parseMaterial())
 			return;
 
@@ -133,10 +133,7 @@ public class PlayerInteractListener implements Listener {
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			// Hologram
 			Location hologramLoc = null;
-			if (!ServerVersion.isServerVersionAtOrBelow(ServerVersion.V1_12))
-				hologramLoc = event.getClickedBlock().getLocation().add(getDifferenceX(player), -0.80, getDifferenceZ(player));
-			else
-				hologramLoc = event.getClickedBlock().getLocation();
+			hologramLoc = event.getClickedBlock().getLocation();
 			hologramLoc.setDirection(player.getLocation().getDirection());
 
 			// Call hologram event
@@ -210,43 +207,5 @@ public class PlayerInteractListener implements Listener {
 					.replace("%price%", EconomyManager.formatEconomy(price)));
 		}
 		return line;
-	}
-
-	private double getDifferenceX(Player player) {
-		double direction = 0;
-		switch (player.getFacing().toString()) {
-			case "WEST":
-				direction = 1;
-				break;
-			case "EAST":
-				direction = -1;
-				break;
-			case "SOUTH":
-			case "NORTH":
-				direction = 0;
-				break;
-			default:
-				break;
-		}
-		return direction;
-	}
-
-	private double getDifferenceZ(Player player) {
-		double direction = 0;
-		switch (player.getFacing().toString()) {
-			case "WEST":
-			case "EAST":
-				direction = 0;
-				break;
-			case "SOUTH":
-				direction = -1;
-				break;
-			case "NORTH":
-				direction = 1;
-				break;
-			default:
-				break;
-		}
-		return direction;
 	}
 }

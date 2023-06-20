@@ -82,7 +82,10 @@ public final class Sellwand extends ZachCorePlugin {
 
 		sellWandManager = new SellWandManager(this);
 		this.setLocale(getConfig().getString("system.locale"), true);
-		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> ShopManager.load(this), 60L);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
+			ShopManager.load(this);
+			EconomyManager.load();
+		}, 60L);
 	}
 
 	public static Sellwand getInstance() {
