@@ -4,7 +4,6 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import me.zachary.zachcore.utils.xseries.XMaterial;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +17,7 @@ public class OSellwand {
 
 	private Boolean glowing;
 
-	private Material material;
+	private XMaterial material;
 
 	private List<String> lore;
 	private Double multiplier;
@@ -29,10 +28,15 @@ public class OSellwand {
 		this.name = name;
 		this.glowing = glowing;
 		try {
-			this.material = Material.valueOf(material);
+			if(material.contains(":")){
+				String[] split = material.split(":");
+				this.material = XMaterial.valueOf(split[0]);
+				this.modelData = Integer.parseInt(split[1]);
+			}else
+				this.material = XMaterial.valueOf(material);
 		} catch (Exception e) {
 			Bukkit.getLogger().info("[Sellwand] The material " + material + " is not found in sellwand id " + id);
-			this.material = Material.STICK;
+			this.material = XMaterial.STICK;
 		}
 		this.lore = lore;
 		this.multiplier = multiplier;
@@ -60,7 +64,7 @@ public class OSellwand {
 	}
 
 	public ItemStack getSellWand(Integer uses, Integer item, Double price) {
-		ItemBuilder sellWand = new ItemBuilder(material)
+		ItemBuilder sellWand = new ItemBuilder(material.parseItem())
 				.name(name.replace("%multiplier%", String.valueOf(multiplier))
 						.replace("%uses%", String.valueOf(uses == null ? this.uses : uses)))
 				.lore(getLore(uses, item, price));
