@@ -16,3 +16,4 @@ sellwand:
   cooldown: '&cYou can use this sellwand again in &7%seconds%&c.'
   sell-success: '&aYou sold &7%item_amount% &aitems for a total of &7%price%&a.'
   sell-nothing: '&cNothing to sell in this chest.'
+  sell-no-permission: '&cYou do not have permission to use this sellwand.'

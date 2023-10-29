@@ -3,6 +3,7 @@ sellwand:
     name: "&6&lTier 1 sell wand"
     material: STICK
     glowing: true
+    permission: null
     multiplier: 1.0
     uses: 100
     lore:
@@ -20,6 +21,7 @@ sellwand:
     name: "&e&lTier 2 sell wand"
     material: STICK
     glowing: true
+    permission: null
     multiplier: 1.5
     uses: 500
     lore:
@@ -37,6 +39,7 @@ sellwand:
     name: "&a&lTier 3 sell wand"
     material: STICK
     glowing: true
+    permission: "sellwand.tier.3"
     multiplier: 2.0
     uses: -1
     lore:

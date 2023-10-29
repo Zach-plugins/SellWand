@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class OSellwand {
-	private String id, name;
+	private String id, name, permission;
 
 	private Boolean glowing;
 
@@ -23,7 +23,7 @@ public class OSellwand {
 	private Double multiplier;
 	private Integer uses, modelData;
 
-	public OSellwand(String id, String name, Boolean glowing, String material, List<String> lore, Double multiplier, int uses) {
+	public OSellwand(String id, String name, Boolean glowing, String material, List<String> lore, Double multiplier, int uses, String permission) {
 		this.id = id;
 		this.name = name;
 		this.glowing = glowing;
@@ -41,6 +41,7 @@ public class OSellwand {
 		this.lore = lore;
 		this.multiplier = multiplier;
 		this.uses = uses;
+		this.permission = permission;
 	}
 
 	public String getId() {
@@ -59,6 +60,10 @@ public class OSellwand {
 		return name;
 	}
 
+	public String getPermission() {
+		return permission;
+	}
+
 	public ItemStack getSellWand(){
 		return getSellWand(null, 0, 0D);
 	}
@@ -74,6 +79,7 @@ public class OSellwand {
 		sellWandNBT.setString("id", id);
 		sellWandNBT.setDouble("Multiplier", multiplier);
 		sellWandNBT.setInteger("Uses", (uses == null ? this.uses : uses));
+		sellWandNBT.setString("permission", permission);
 		sellWandNBT.setInteger("total_item", item);
 		sellWandNBT.setDouble("total_sold_price", price);
 		sellWandNBT.setObject("UUID_Sellwand", UUID.randomUUID());

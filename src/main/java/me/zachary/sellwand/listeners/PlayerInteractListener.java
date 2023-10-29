@@ -73,6 +73,14 @@ public class PlayerInteractListener implements Listener {
 			return;
 		}
 
+		if(item.hasTag("permission") && !player.hasPermission(item.getString("permission"))){
+			if(errorSound != null)
+				errorSound.play(player);
+			plugin.getLocale().getMessage("sellwand.sell-no-permission").sendPrefixedMessage(player);
+			return;
+
+		}
+
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK && CooldownBuilder.isCooldown("Use cooldown", player.getUniqueId())) {
 			event.setCancelled(true);
 			plugin.getLocale().getMessage("sellwand.cooldown")

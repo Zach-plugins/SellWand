@@ -27,7 +27,8 @@ public class SellWandManager {
 						section.getString("material"),
 						section.getStringList("lore"),
 						section.getDouble("multiplier"),
-						section.getInt("uses")
+						section.getInt("uses"),
+						section.getString("permission")
 				));
 		}
 	}
