@@ -12,8 +12,13 @@ import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import me.zachary.zachcore.utils.hooks.ShopManager;
 import me.zachary.zachcore.utils.xseries.XMaterial;
+import net.bestemor.superhoppers.SuperHoppersAPI;
+import net.bestemor.superhoppers.hopper.SuperHopper;
+import net.bestemor.superhoppers.stored.SimpleItem;
+import net.bestemor.superhoppers.stored.Stored;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +28,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.EulerAngle;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -45,10 +52,15 @@ public class PlayerInteractListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (event.isCancelled() ||
-				!(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) ||
+		if (!(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK) ||
 				event.getItem() == null || event.getItem().getType() == XMaterial.AIR.parseMaterial())
 			return;
+
+		if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER){
+		} else {
+			if(event.isCancelled())
+				return;
+		}
 
 		/*
 		 * Action.LEFT_CLICK_BLOCK = HOLOGRAM
@@ -112,6 +124,41 @@ public class PlayerInteractListener implements Listener {
 					}
 				}
 			}
+		} else if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER){
+			SuperHopper<?> hopper = SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation());
+
+			if(hopper == null) return;
+
+			if(!hopper.getType().equals("Item"))
+				return;
+
+			event.setCancelled(true);
+
+			final double[] price = {0D};
+			final int[] itemAmounts = {0};
+
+			List<? extends Stored<?>> hopperStorage = hopper.getStorage();
+
+			for (int i = 0; i < hopperStorage.size(); i++) {
+				Stored<?> storedItem = hopperStorage.get(i);
+				ItemStack itemStack = storedItem.asItem(player);
+				double itemPrice = ShopManager.getSellPrice(player, itemStack, Integer.parseInt(String.valueOf(storedItem.getAmount())));
+				itemPrice = itemPrice * Integer.parseInt(String.valueOf(storedItem.getAmount()));
+				if(itemPrice >= 0D) {
+					price[0] += itemPrice;
+					itemAmounts[0] += Integer.parseInt(String.valueOf(storedItem.getAmount()));
+					items.put(i, itemStack);
+					if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
+						storedItem.setAmount(0);
+						hopper.updateHologram();
+						hopper.updateStorageIfView();
+					}
+				}
+			}
+
+			amount += price[0];
+			itemAmount += itemAmounts[0];
+
 		}else {
 			Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
 			if (contents == null) {
@@ -143,6 +190,12 @@ public class PlayerInteractListener implements Listener {
 			Location hologramLoc = null;
 			hologramLoc = event.getClickedBlock().getLocation();
 			hologramLoc.setDirection(player.getLocation().getDirection());
+
+			double offsetx = player.getLocation().getX() - hologramLoc.getX();
+			double offsetz = player.getLocation().getZ() - hologramLoc.getZ();
+
+			hologramLoc.add(new Vector(offsetx, 0, offsetz).normalize().multiply(1));
+			hologramLoc.subtract(0, 0.8, 0);
 
 			// Call hologram event
 			SellwandHologramEvent sellwandHologramEvent = new SellwandHologramEvent(player, hologramLoc, itemAmount, amount, items);
@@ -185,10 +238,13 @@ public class PlayerInteractListener implements Listener {
 				EconomyManager.deposit(player, amount);
 				if (uses != -1)
 					--uses;
+				Object hand = null;
+				if(!ReflectionUtils.getVersion().contains("1_8"))
+					hand = event.getHand();
 				if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
-					PlayerInventoryUtils.setInActiveHand(player, event.getHand(), null);
+					PlayerInventoryUtils.setInActiveHand(player, hand, null);
 				else
-					PlayerInventoryUtils.setInActiveHand(player, event.getHand(), plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
+					PlayerInventoryUtils.setInActiveHand(player, hand, plugin.getSellWandManager().getSellwand((item.getString("id").isEmpty() ? "old" : item.getString("id")))
 							.getSellWand(uses, (item.getInteger("total_item") + itemAmount), (item.getDouble("total_sold_price") + amount)));
 				plugin.getLocale().getMessage("sellwand.sell-success")
 						.processPlaceholder("price", EconomyManager.formatEconomy(amount))
