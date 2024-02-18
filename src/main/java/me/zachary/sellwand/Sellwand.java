@@ -2,11 +2,14 @@ package me.zachary.sellwand;
 
 import me.zachary.sellwand.commands.GiveCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
+import me.zachary.sellwand.listeners.GrindstoneListener;
 import me.zachary.sellwand.listeners.PlayerInteractListener;
 import me.zachary.sellwand.wands.SellWandManager;
 import me.zachary.zachcore.ZachCorePlugin;
 import me.zachary.zachcore.config.Config;
 import me.zachary.zachcore.utils.Metrics;
+import me.zachary.zachcore.utils.ReflectionUtils;
+import me.zachary.zachcore.utils.ServerVersion;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import me.zachary.zachcore.utils.hooks.ShopManager;
@@ -37,6 +40,8 @@ public final class Sellwand extends ZachCorePlugin {
 
 		// Load listeners
 		new PlayerInteractListener(this);
+		if(ServerVersion.isServerVersionAtLeast(ServerVersion.V1_14))
+			new GrindstoneListener(this);
 
 		// Load Commands
 		new GiveCommand(this);
