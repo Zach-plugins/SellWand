@@ -14,7 +14,6 @@ import me.zachary.zachcore.utils.hooks.ShopManager;
 import me.zachary.zachcore.utils.xseries.XMaterial;
 import net.bestemor.superhoppers.SuperHoppersAPI;
 import net.bestemor.superhoppers.hopper.SuperHopper;
-import net.bestemor.superhoppers.stored.SimpleItem;
 import net.bestemor.superhoppers.stored.Stored;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -25,10 +24,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -204,6 +201,9 @@ public class PlayerInteractListener implements Listener {
 			if (sellwandHologramEvent.isCancelled())
 				return;
 
+			if(sellwandHologramEvent.getSellPrice() != amount)
+				amount = sellwandHologramEvent.getSellPrice();
+
 			HologramManager.removeHologram(hologramLoc);
 			HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount));
 			Location finalHologramLoc = hologramLoc;
@@ -218,11 +218,14 @@ public class PlayerInteractListener implements Listener {
 			int uses = item.getInteger("Uses");
 
 			// Call sell event
-			SellwandSellEvent SellwandSellEvent = new SellwandSellEvent(player, uses, itemAmount, amount, items);
-			Bukkit.getPluginManager().callEvent(SellwandSellEvent);
+			SellwandSellEvent sellwandSellEvent = new SellwandSellEvent(player, uses, itemAmount, amount, items);
+			Bukkit.getPluginManager().callEvent(sellwandSellEvent);
 
-			if (SellwandSellEvent.isCancelled())
+			if (sellwandSellEvent.isCancelled())
 				return;
+
+			if(sellwandSellEvent.getSellPrice() != amount)
+				amount = sellwandSellEvent.getSellPrice();
 
 			if (uses == 0) {
 				plugin.getLocale().getMessage("sellwand.no-uses").sendPrefixedMessage(player);

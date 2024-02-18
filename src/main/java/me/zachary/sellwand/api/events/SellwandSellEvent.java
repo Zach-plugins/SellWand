@@ -72,6 +72,14 @@ public class SellwandSellEvent extends Event implements Cancellable {
         return sellPrice;
     }
 
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public void addSellPrice(double sellPrice) {
+        this.sellPrice += sellPrice;
+    }
+
     /**
      * @return the items sold
      */
