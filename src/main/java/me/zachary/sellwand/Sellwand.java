@@ -2,6 +2,8 @@ package me.zachary.sellwand;
 
 import me.zachary.sellwand.commands.GiveCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
+import me.zachary.sellwand.listeners.AnvilListener;
+import me.zachary.sellwand.listeners.EnchantListener;
 import me.zachary.sellwand.listeners.GrindstoneListener;
 import me.zachary.sellwand.listeners.PlayerInteractListener;
 import me.zachary.sellwand.wands.SellWandManager;
@@ -42,6 +44,8 @@ public final class Sellwand extends ZachCorePlugin {
 		new PlayerInteractListener(this);
 		if(ServerVersion.isServerVersionAtLeast(ServerVersion.V1_14))
 			new GrindstoneListener(this);
+		new EnchantListener(this);
+		new AnvilListener(this);
 
 		// Load Commands
 		new GiveCommand(this);
