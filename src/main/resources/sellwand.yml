@@ -39,7 +39,7 @@ sellwand:
     name: "&a&lTier 3 sell wand"
     material: STICK
     glowing: true
-    permission: "sellwand.tier.3"
+    permission: null
     multiplier: 2.0
     uses: -1
     lore:
