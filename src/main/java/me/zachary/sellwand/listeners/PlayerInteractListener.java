@@ -179,7 +179,7 @@ public class PlayerInteractListener implements Listener {
 				}
 			}
 		}
-		double multiplier = item.getDouble("Multiplier");
+		double multiplier = PermissionUtils.getNumberFromPermissionDouble(player, "sellwand.multiplier", false, item.getDouble("Multiplier"));
 		amount = amount * multiplier;
 
 		if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -205,7 +205,7 @@ public class PlayerInteractListener implements Listener {
 				amount = sellwandHologramEvent.getSellPrice();
 
 			HologramManager.removeHologram(hologramLoc);
-			HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount));
+			HologramManager.createHologram(hologramLoc, getHologramLine(itemAmount, amount, multiplier));
 			Location finalHologramLoc = hologramLoc;
 			Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
 				@Override
@@ -252,6 +252,7 @@ public class PlayerInteractListener implements Listener {
 				plugin.getLocale().getMessage("sellwand.sell-success")
 						.processPlaceholder("price", EconomyManager.formatEconomy(amount))
 						.processPlaceholder("item_amount", String.valueOf(itemAmount))
+						.processPlaceholder("multiplier", String.valueOf(multiplier))
 						.sendPrefixedMessage(player);
 				if(!PermissionUtils.hasPermission(player, "sellwand.cooldown.bypass")){
 					int cooldown = PermissionUtils.getNumberFromPermission(player, "sellwand.cooldown", false, 0);
@@ -267,10 +268,11 @@ public class PlayerInteractListener implements Listener {
 		}
 	}
 
-	public List<String> getHologramLine(int amount, double price) {
+	public List<String> getHologramLine(int amount, double price, double multiplier) {
 		List<String> line = new ArrayList<>();
 		for (String i : Sellwand.getInstance().getConfig().getStringList("Hologram line")) {
 			line.add(i.replace("%amount%", String.valueOf(amount))
+					.replace("%multiplier%", String.valueOf(multiplier))
 					.replace("%price%", EconomyManager.formatEconomy(price)));
 		}
 		return line;
