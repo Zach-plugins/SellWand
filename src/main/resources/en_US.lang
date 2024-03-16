@@ -17,3 +17,8 @@ sellwand:
   sell-success: '&aYou sold &7%item_amount% &aitems for a total of &7%price%&a.'
   sell-nothing: '&cNothing to sell in this chest.'
   sell-no-permission: '&cYou do not have permission to use this sellwand.'
+
+modify:
+    no-sellwand: '&cYou must be holding a sellwand to modify it.'
+    success: '&aSuccessfully modified the sellwand.'
+    amount-invalid: '&cThe amount must be a number.'

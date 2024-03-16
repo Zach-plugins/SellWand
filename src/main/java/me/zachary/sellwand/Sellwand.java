@@ -1,6 +1,7 @@
 package me.zachary.sellwand;
 
 import me.zachary.sellwand.commands.GiveCommand;
+import me.zachary.sellwand.commands.ModifyCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
 import me.zachary.sellwand.listeners.AnvilListener;
 import me.zachary.sellwand.listeners.EnchantListener;
@@ -50,6 +51,7 @@ public final class Sellwand extends ZachCorePlugin {
 		// Load Commands
 		new GiveCommand(this);
 		new ReloadCommand(this);
+		new ModifyCommand(this);
 	}
 
 	@Override
