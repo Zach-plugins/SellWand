@@ -7,11 +7,11 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.sellwand.api.events.SellwandHologramEvent;
 import me.zachary.sellwand.api.events.SellwandSellEvent;
+import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XMaterial;
 import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
 import me.zachary.zachcore.utils.hooks.ShopManager;
-import me.zachary.zachcore.utils.xseries.XMaterial;
 import net.bestemor.superhoppers.SuperHoppersAPI;
 import net.bestemor.superhoppers.hopper.SuperHopper;
 import net.bestemor.superhoppers.stored.Stored;
@@ -67,6 +67,7 @@ public class PlayerInteractListener implements Listener {
 		NBTItem item = new NBTItem(event.getItem());
 		if (!(item.hasKey("Is a sell wand") || item.hasKey("UUID_Sellwand")))
 			return;
+		event.setCancelled(true);
 		event.getItem().setDurability((short) 0);
 
 		if (event.getClickedBlock() == null)
