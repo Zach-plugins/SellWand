@@ -245,6 +245,7 @@ public class PlayerInteractListener implements Listener {
 				if (uses != -1)
 					--uses;
 				Object hand = null;
+				System.out.println(ReflectionUtils.Version);
 				if(!ReflectionUtils.getVersion().contains("1_8"))
 					hand = event.getHand();
 				if (plugin.getConfig().getBoolean("Destroy wand") && uses == 0)
