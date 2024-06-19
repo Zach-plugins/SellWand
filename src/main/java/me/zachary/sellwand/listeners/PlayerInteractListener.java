@@ -8,6 +8,7 @@ import me.zachary.sellwand.Sellwand;
 import me.zachary.sellwand.api.events.SellwandHologramEvent;
 import me.zachary.sellwand.api.events.SellwandSellEvent;
 import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XMaterial;
+import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XSound;
 import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
@@ -18,6 +19,7 @@ import net.bestemor.superhoppers.stored.Stored;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,18 +34,18 @@ import java.util.*;
 
 public class PlayerInteractListener implements Listener {
 	private final Sellwand plugin;
-	private CompatibleSound sellSound = null;
-	private CompatibleSound errorSound = null;
+	private Sound sellSound = null;
+	private Sound errorSound = null;
 
 	public PlayerInteractListener(Sellwand plugin) {
 		this.plugin = plugin;
 		Bukkit.getPluginManager().registerEvents(this, plugin);
 
 		try {
-			sellSound = CompatibleSound.valueOf(plugin.getConfig().isSet("Sound.Sell") ? plugin.getConfig().getString("Sound.Sell") : null);
-			errorSound = CompatibleSound.valueOf(plugin.getConfig().isSet("Sound.Error") ? plugin.getConfig().getString("Sound.Error") : null);
+			sellSound = XSound.matchXSound(plugin.getConfig().isSet("Sound.Sell") ? plugin.getConfig().getString("Sound.Sell") : null).orElse(null).parseSound();
+			errorSound = XSound.matchXSound(plugin.getConfig().isSet("Sound.Error") ? plugin.getConfig().getString("Sound.Error") : null).orElse(null).parseSound();
 		} catch (Exception e) {
-			plugin.getLogger().warning("Sounds are not valid in config.yml!");
+			plugin.getLogger().warning("Sound are not valid in config.yml!");
 		}
 	}
 
@@ -78,14 +80,14 @@ public class PlayerInteractListener implements Listener {
 		if ((event.getAction() == Action.LEFT_CLICK_BLOCK && !player.hasPermission("sellwand.hologram")) ||
 				(event.getAction() == Action.RIGHT_CLICK_BLOCK && !player.hasPermission("sellwand.use"))) {
 			if(errorSound != null)
-				errorSound.play(player);
+				player.playSound(player.getLocation(), errorSound, 1f, 1f);
 			plugin.getLocale().getMessage("command.no-permission").sendPrefixedMessage(player);
 			return;
 		}
 
 		if(item.hasTag("permission") && !player.hasPermission(item.getString("permission"))){
 			if(errorSound != null)
-				errorSound.play(player);
+				player.playSound(player.getLocation(), errorSound, 1f, 1f);
 			plugin.getLocale().getMessage("sellwand.sell-no-permission").sendPrefixedMessage(player);
 			return;
 
@@ -231,7 +233,7 @@ public class PlayerInteractListener implements Listener {
 			if (uses == 0) {
 				plugin.getLocale().getMessage("sellwand.no-uses").sendPrefixedMessage(player);
 				if(errorSound != null)
-					errorSound.play(player);
+					player.playSound(player.getLocation(), errorSound, 1f, 1f);
 				return;
 			}
 
@@ -260,10 +262,10 @@ public class PlayerInteractListener implements Listener {
 					CooldownBuilder.addCooldown("Use cooldown", player.getUniqueId(), cooldown);
 				}
 				if(sellSound != null)
-					sellSound.play(player);
+					player.playSound(player.getLocation(), sellSound, 1f, 1f);
 			} else {
 				if(errorSound != null)
-					errorSound.play(player);
+					player.playSound(player.getLocation(), errorSound, 1f, 1f);
 				plugin.getLocale().getMessage("sellwand.sell-nothing").sendPrefixedMessage(player);
 			}
 		}
