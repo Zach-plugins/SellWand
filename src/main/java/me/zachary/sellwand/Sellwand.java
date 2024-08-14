@@ -1,8 +1,10 @@
 package me.zachary.sellwand;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import me.zachary.sellwand.commands.GiveCommand;
 import me.zachary.sellwand.commands.ModifyCommand;
 import me.zachary.sellwand.commands.ReloadCommand;
+import me.zachary.sellwand.confirmations.ConfirmationManager;
 import me.zachary.sellwand.listeners.AnvilListener;
 import me.zachary.sellwand.listeners.EnchantListener;
 import me.zachary.sellwand.listeners.GrindstoneListener;
@@ -27,6 +29,7 @@ public final class Sellwand extends ZachCorePlugin {
 	private static Sellwand instance;
 	private SellWandManager sellWandManager;
 	private final Config sellWandConfig = new Config();
+	private ConfirmationManager confirmationManager;
 
 	@Override
 	public void onEnable() {
@@ -40,6 +43,7 @@ public final class Sellwand extends ZachCorePlugin {
 		//Updatechecker.update(this, "sellwand");
 
 		reload();
+		NBT.preloadApi();
 
 		// Load listeners
 		new PlayerInteractListener(this);
@@ -97,6 +101,9 @@ public final class Sellwand extends ZachCorePlugin {
 			ShopManager.load(this);
 			EconomyManager.load();
 		}, 60L);
+		
+		if(getConfig().getBoolean("Confirmation.enabled", false)) 
+			confirmationManager = new ConfirmationManager(this);
 	}
 
 	public static Sellwand getInstance() {
@@ -105,6 +112,10 @@ public final class Sellwand extends ZachCorePlugin {
 
 	public SellWandManager getSellWandManager() {
 		return sellWandManager;
+	}
+	
+	public ConfirmationManager getConfirmationManager() {
+		return confirmationManager;
 	}
 
 	public Config getSellWandConfig() {

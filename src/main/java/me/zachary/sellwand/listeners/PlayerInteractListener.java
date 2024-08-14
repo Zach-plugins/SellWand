@@ -2,13 +2,16 @@ package me.zachary.sellwand.listeners;
 
 import com.bgsoftware.wildchests.api.WildChestsAPI;
 import com.bgsoftware.wildchests.api.objects.ChestType;
+import com.bgsoftware.wildchests.api.objects.chests.Chest;
 import com.bgsoftware.wildchests.api.objects.chests.StorageChest;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.zachary.sellwand.Sellwand;
 import me.zachary.sellwand.api.events.SellwandHologramEvent;
 import me.zachary.sellwand.api.events.SellwandSellEvent;
+import me.zachary.sellwand.confirmations.Confirmation;
 import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XMaterial;
 import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XSound;
+import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.particles.XParticle;
 import me.zachary.zachcore.utils.*;
 import me.zachary.zachcore.utils.hooks.EconomyManager;
 import me.zachary.zachcore.utils.hooks.HologramManager;
@@ -16,10 +19,9 @@ import me.zachary.zachcore.utils.hooks.ShopManager;
 import net.bestemor.superhoppers.SuperHoppersAPI;
 import net.bestemor.superhoppers.hopper.SuperHopper;
 import net.bestemor.superhoppers.stored.Stored;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -105,8 +107,15 @@ public class PlayerInteractListener implements Listener {
 		int itemAmount = 0;
 		Map<Integer, ItemStack> items = new HashMap<>();
 
+		boolean isConfirmed = plugin.getConfirmationManager() != null;
+		Confirmation confirmation = null;
+		if(plugin.getConfirmationManager() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK){
+			confirmation = plugin.getConfirmationManager().getConfirmationByBlock(event.getClickedBlock());
+			isConfirmed = confirmation != null;
+		}
+
 		if(Bukkit.getPluginManager().isPluginEnabled("WildChests") && WildChestsAPI.getChest(event.getClickedBlock().getLocation()) instanceof StorageChest){
-			com.bgsoftware.wildchests.api.objects.chests.Chest chest = WildChestsAPI.getChest(event.getClickedBlock().getLocation());
+			Chest chest = WildChestsAPI.getChest(event.getClickedBlock().getLocation());
 			if(chest != null && chest.getChestType().equals(ChestType.STORAGE_UNIT)) {
 				event.setCancelled(true);
 				StorageChest storageChest = (StorageChest) chest;
@@ -118,7 +127,7 @@ public class PlayerInteractListener implements Listener {
 					amount += price;
 					itemAmount += Integer.parseInt(String.valueOf(storageChest.getAmount()));
 					items.put(0, itemStack);
-					if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
+					if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK){
 						storageChest.setAmount(0);
 						storageChest.update();
 					}
@@ -148,7 +157,7 @@ public class PlayerInteractListener implements Listener {
 					price[0] += itemPrice;
 					itemAmounts[0] += Integer.parseInt(String.valueOf(storedItem.getAmount()));
 					items.put(i, itemStack);
-					if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
+					if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK){
 						storedItem.setAmount(0);
 						hopper.updateHologram();
 						hopper.updateStorageIfView();
@@ -173,15 +182,16 @@ public class PlayerInteractListener implements Listener {
 					price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
 				}
 				if (price >= 0 && chestItem != null) {
-					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
+					if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK) contents.setItem(i, XMaterial.AIR.parseItem());
 					itemAmount += chestItem.getAmount();
 					amount += price;
 					items.put(i, chestItem);
 
-					if(event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
+					if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
 				}
 			}
 		}
+		
 		double multiplier = PermissionUtils.getNumberFromPermissionDouble(player, "sellwand.multiplier", false, item.getDouble("Multiplier"));
 		amount = amount * multiplier;
 
@@ -218,6 +228,17 @@ public class PlayerInteractListener implements Listener {
 			}, (plugin.getConfig().getInt("Hologram time", 5) * 20L));
 		} else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			// Sell
+			if(plugin.getConfirmationManager() != null){
+				if(!isConfirmed){
+					plugin.getConfirmationManager().addConfirmation(new Confirmation(player, event.getClickedBlock()));
+					return;
+				}
+
+				if(!isConfirmed) return;
+
+				plugin.getConfirmationManager().removeConfirmation(confirmation);
+			}
+			
 			int uses = item.getInteger("Uses");
 
 			// Call sell event

@@ -17,6 +17,14 @@ Hologram line:
 # After how many seconds hologram will be removed
 Hologram time: 5
 
+# Confirmation for sale with double click
+Confirmation:
+  enabled: true
+  # Particle color. RGB format (red, green, blue)
+  color: "0,255,0"
+  # How many seconds player have to confirm sell
+  time: 2
+
 system:
   # What locale should we use?
   locale: "en_US"
