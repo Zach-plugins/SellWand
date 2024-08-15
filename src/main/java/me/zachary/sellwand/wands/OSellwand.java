@@ -1,6 +1,7 @@
 package me.zachary.sellwand.wands;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XEnchantment;
 import me.zachary.zachcore.dependencies.com.cryptomorin.xseries.XMaterial;
 import me.zachary.zachcore.utils.items.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -74,7 +75,7 @@ public class OSellwand {
 						.replace("%uses%", String.valueOf(uses == null ? this.uses : uses)))
 				.lore(getLore(uses, item, price));
 		if (glowing)
-			sellWand.enchant(Enchantment.ARROW_INFINITE, 1).flag(ItemFlag.HIDE_ENCHANTS);
+			sellWand.enchant(XEnchantment.INFINITY.getEnchant(), 1).flag(ItemFlag.HIDE_ENCHANTS);
 		NBTItem sellWandNBT = new NBTItem(sellWand.build());
 		sellWandNBT.setString("id", id);
 		sellWandNBT.setDouble("Multiplier", multiplier);
