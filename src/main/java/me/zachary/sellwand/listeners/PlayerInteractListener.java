@@ -31,6 +31,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import us.lynuxcraft.deadsilenceiv.advancedchests.AdvancedChests;
+import us.lynuxcraft.deadsilenceiv.advancedchests.AdvancedChestsAPI;
+import us.lynuxcraft.deadsilenceiv.advancedchests.chest.AdvancedChest;
+import us.lynuxcraft.deadsilenceiv.advancedchests.chest.gui.page.ChestPage;
 
 import java.util.*;
 
@@ -133,6 +137,32 @@ public class PlayerInteractListener implements Listener {
 					}
 				}
 			}
+		} else if(Bukkit.getPluginManager().isPluginEnabled("AdvancedChests") && AdvancedChestsAPI.getChestManager().getAdvancedChest(event.getClickedBlock().getLocation()) != null){
+			AdvancedChest<?, ?> advancedChests = AdvancedChestsAPI.getChestManager().getAdvancedChest(event.getClickedBlock().getLocation());
+			
+			if(advancedChests == null) return;
+
+			for (int i = 0; i < advancedChests.getPages().size(); i++) {
+				ChestPage page = advancedChests.getPageById(i);
+				if(page == null) continue;
+				
+				for (int j = 0; j < page.getBukkitInventory().getSize(); j++) {
+					ItemStack chestItem = page.getBukkitInventory().getItem(j);
+					double price = 0D;
+					if (chestItem != null) {
+						price = ShopManager.getSellPrice(player, chestItem, chestItem.getAmount());
+					}
+					if (price >= 0 && chestItem != null) {
+						if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK) page.getBukkitInventory().setItem(j, XMaterial.AIR.parseItem());
+						itemAmount += chestItem.getAmount();
+						amount += price;
+						items.put(j, chestItem);
+
+						if(isConfirmed && event.getAction() == Action.RIGHT_CLICK_BLOCK) ShopManager.sellItem(player, chestItem, chestItem.getAmount());
+					}
+				}
+			}
+			
 		} else if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER && SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation()) != null){
 			SuperHopper<?> hopper = SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation());
 
