@@ -111,7 +111,7 @@ public class PlayerInteractListener implements Listener {
 		int itemAmount = 0;
 		Map<Integer, ItemStack> items = new HashMap<>();
 
-		boolean isConfirmed = plugin.getConfirmationManager() != null;
+		boolean isConfirmed = plugin.getConfirmationManager() == null;
 		Confirmation confirmation = null;
 		if(plugin.getConfirmationManager() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK){
 			confirmation = plugin.getConfirmationManager().getConfirmationByBlock(event.getClickedBlock());
