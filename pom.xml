@@ -6,7 +6,7 @@
 
     <groupId>me.zachary</groupId>
     <artifactId>sellwand</artifactId>
-    <version>1.6.4-snapshot</version>
+    <version>1.7.0</version>
     <packaging>jar</packaging>
 
     <name>Sellwand</name>
