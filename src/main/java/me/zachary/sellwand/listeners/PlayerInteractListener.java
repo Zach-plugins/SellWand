@@ -133,7 +133,7 @@ public class PlayerInteractListener implements Listener {
 					}
 				}
 			}
-		} else if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER){
+		} else if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER && SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation()) != null){
 			SuperHopper<?> hopper = SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation());
 
 			if(hopper == null) return;
