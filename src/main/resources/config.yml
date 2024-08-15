@@ -19,7 +19,7 @@ Hologram time: 5
 
 # Confirmation for sale with double click
 Confirmation:
-  enabled: true
+  enabled: false
   # Particle color. RGB format (red, green, blue)
   color: "0,255,0"
   # How many seconds player have to confirm sell
