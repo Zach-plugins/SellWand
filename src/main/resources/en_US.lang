@@ -8,17 +8,19 @@ command:
   reload: '&aSuccessfully reloaded the configuration and language files.'
   player-not-found: '&cCould not find a player with the name &7%player%&c.'
   give-success: '&aSuccessfully gave &7%player% &aa Sellwand.'
-  receive-success: '&aYou have receive a sell wand.'
-  sellwand-not-found: '&cCould not find a sellwand with the id &7%sellwand%&c.'
+  receive-success: '&aYou have received a Sellwand.'
+  sellwand-not-found: '&cCould not find a Sellwand with the ID &7%sellwand%&c.'
 
+# Sellwand Messages
 sellwand:
-  no-uses: '&cThis sellwand have no more use.'
-  cooldown: '&cYou can use this sellwand again in &7%seconds%&c.'
+  no-uses: '&cThis Sellwand has no more uses.'
+  cooldown: '&cYou can use this Sellwand again in &7%seconds%&c.'
   sell-success: '&aYou sold &7%item_amount% &aitems for a total of &7%price%&a.'
-  sell-nothing: '&cNothing to sell in this chest.'
-  sell-no-permission: '&cYou do not have permission to use this sellwand.'
+  sell-nothing: '&cThere is nothing to sell in this chest.'
+  sell-no-permission: '&cYou do not have permission to use this Sellwand.'
 
+# Modify Messages
 modify:
-    no-sellwand: '&cYou must be holding a sellwand to modify it.'
-    success: '&aSuccessfully modified the sellwand.'
-    amount-invalid: '&cThe amount must be a number.'
+  no-sellwand: '&cYou must be holding a Sellwand to modify it.'
+  success: '&aSuccessfully modified the Sellwand.'
+  amount-invalid: '&cThe amount must be a number.'
