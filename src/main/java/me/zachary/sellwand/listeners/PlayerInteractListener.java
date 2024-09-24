@@ -118,7 +118,9 @@ public class PlayerInteractListener implements Listener {
 			isConfirmed = confirmation != null;
 		}
 
-		if(Bukkit.getPluginManager().isPluginEnabled("WildChests") && WildChestsAPI.getChest(event.getClickedBlock().getLocation()) instanceof StorageChest){
+		int uses = item.getInteger("Uses");
+
+		if(uses > 0 && Bukkit.getPluginManager().isPluginEnabled("WildChests") && WildChestsAPI.getChest(event.getClickedBlock().getLocation()) instanceof StorageChest){
 			Chest chest = WildChestsAPI.getChest(event.getClickedBlock().getLocation());
 			if(chest != null && chest.getChestType().equals(ChestType.STORAGE_UNIT)) {
 				event.setCancelled(true);
@@ -137,7 +139,7 @@ public class PlayerInteractListener implements Listener {
 					}
 				}
 			}
-		} else if(Bukkit.getPluginManager().isPluginEnabled("AdvancedChests") && AdvancedChestsAPI.getChestManager().getAdvancedChest(event.getClickedBlock().getLocation()) != null){
+		} else if(uses > 0 && Bukkit.getPluginManager().isPluginEnabled("AdvancedChests") && AdvancedChestsAPI.getChestManager().getAdvancedChest(event.getClickedBlock().getLocation()) != null){
 			AdvancedChest<?, ?> advancedChests = AdvancedChestsAPI.getChestManager().getAdvancedChest(event.getClickedBlock().getLocation());
 			
 			if(advancedChests == null) return;
@@ -163,7 +165,7 @@ public class PlayerInteractListener implements Listener {
 				}
 			}
 			
-		} else if(Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER && SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation()) != null){
+		} else if(uses > 0 && Bukkit.getPluginManager().isPluginEnabled("SuperHoppers") && event.getClickedBlock().getType() == Material.HOPPER && SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation()) != null){
 			SuperHopper<?> hopper = SuperHoppersAPI.getHopperManager().getFromLocation(event.getClickedBlock().getLocation());
 
 			if(hopper == null) return;
@@ -198,7 +200,7 @@ public class PlayerInteractListener implements Listener {
 			amount += price[0];
 			itemAmount += itemAmounts[0];
 
-		}else {
+		}else if(uses > 0) {
 			Inventory contents = StorageUtils.getStorageContents(event.getClickedBlock());
 			if (contents == null) {
 				return;
@@ -268,8 +270,6 @@ public class PlayerInteractListener implements Listener {
 
 				plugin.getConfirmationManager().removeConfirmation(confirmation);
 			}
-			
-			int uses = item.getInteger("Uses");
 
 			// Call sell event
 			SellwandSellEvent sellwandSellEvent = new SellwandSellEvent(player, uses, itemAmount, amount, items);
