@@ -95,12 +95,12 @@ public final class Sellwand extends ZachCorePlugin {
 			reloadConfig();
 		}
 
-		sellWandManager = new SellWandManager(this);
-		this.setLocale(getConfig().getString("system.locale"), true);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
 			ShopManager.load(this);
 			EconomyManager.load();
-		}, 60L);
+			sellWandManager = new SellWandManager(this);
+			this.setLocale(getConfig().getString("system.locale"), true);
+		}, 40L);
 		
 		if(getConfig().getBoolean("Confirmation.enabled", false)) 
 			confirmationManager = new ConfirmationManager(this);
